@@ -22,16 +22,15 @@ import java.io.InputStreamReader;
  */
 public class InputReader {
 	private static final InputReader INSTANCE;
-	private final BufferedReader reader;
+	private static final BufferedReader reader;
 	
 	static { // 즉시 초기화 : 클래스 로딩 시점에 바로 객체 생성(멀티 스레드 안전), InputReader 정도는 메모리에 크게 부담되지 않음
 		// 프로그램 시작할 때 거의 반드시 쓰게 되므로
 		INSTANCE = new InputReader();
-	}
-	
-	private InputReader() {
 		reader = new BufferedReader(new InputStreamReader(System.in));
 	}
+	
+	private InputReader() {}
 	
 	/**
 	 * 싱글톤 인스턴스 반환 메서드
@@ -44,19 +43,28 @@ public class InputReader {
 		return INSTANCE;
 	}
 	
+	
 	/**
-	 * 콘솔에서 한 줄 입력 받기
-	 * @param prompt 사용자 입력 안내 메시지
-	 * @return 입력 문자열
+	 * 콘솔에서 한 줄 입력을 받는 메서드
+	 *  입력 실패 시 사용자가 올바른 값을 입력할 때까지 반복
+	 * 
+	 * @param prompt 사용자에게 보여줄 안내 메시지
+	 * @return 사용자가 입력한 문자열, 입력 성공 시 반환
 	 */
 	public String readLine(String prompt) {
-		System.out.println(prompt);
-		try {
-			
-		} catch(Exception e) {
-			
+		while(true) { // 입력 성공할 때까지 무한 반복
+		    try {
+			    // 사용자에게 안내 메시지 출력
+			    // print()를 사용하여 커서를 같은 줄에 두고 입력받음
+				System.out.print(prompt); 
+		        // BufferedReader로 한 줄 입력 받기
+		        // readLine()은 사용자가 Enter를 누를 때까지 대기하고, 입력된 문자열 반환
+		        return reader.readLine(); 
+		        
+		    } catch (Exception e) {      
+		        System.err.println("[입력 오류] 다시 입력해주세요.");
+		    }
 		}
-		return "";
 	}
 	
 }
