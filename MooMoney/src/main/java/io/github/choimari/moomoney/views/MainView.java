@@ -1,15 +1,16 @@
 package io.github.choimari.moomoney.views;
 
+import io.github.choimari.moomoney.factory.AbstractView;
 import io.github.choimari.moomoney.util.InputReader;
 
 /**
  *  프로그램 시작 화면
  */
-public class MainView implements View {
-	
-	private final InputReader reader;
+public class MainView extends AbstractView {
+		
 	public MainView(InputReader reader) {
-		this.reader = reader;
+		super(reader);
+
 	}
 	
 	private final String title = "한눈에 지출";
@@ -46,7 +47,7 @@ public class MainView implements View {
 
 
 	@Override
-	public void show() {
+	public void showContent() {
 		System.out.println("===================================================================================");
 		System.out.println("                                " + title + " Ver." + version);
 		System.out.println("===================================================================================");
@@ -56,4 +57,6 @@ public class MainView implements View {
 		System.out.println(intro);
 	    System.out.println("===================================================================================");
 	}
+
+
 }

@@ -22,12 +22,12 @@ import java.io.InputStreamReader;
  */
 public class InputReader {
 	private static final InputReader INSTANCE;
-	private static final BufferedReader reader;
+	private static final BufferedReader READER;
 	
 	static { // 즉시 초기화 : 클래스 로딩 시점에 바로 객체 생성(멀티 스레드 안전), InputReader 정도는 메모리에 크게 부담되지 않음
 		// 프로그램 시작할 때 거의 반드시 쓰게 되므로
 		INSTANCE = new InputReader();
-		reader = new BufferedReader(new InputStreamReader(System.in));
+		READER = new BufferedReader(new InputStreamReader(System.in));
 	}
 	
 	private InputReader() {}
@@ -59,7 +59,7 @@ public class InputReader {
 				System.out.print(prompt); 
 		        // BufferedReader로 한 줄 입력 받기
 		        // readLine()은 사용자가 Enter를 누를 때까지 대기하고, 입력된 문자열 반환
-		        return reader.readLine(); 
+		        return READER.readLine(); 
 		        
 		    } catch (Exception e) {      
 		        System.err.println("[입력 오류] 다시 입력해주세요.");
