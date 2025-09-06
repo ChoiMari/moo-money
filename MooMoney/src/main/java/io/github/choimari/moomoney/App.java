@@ -1,0 +1,9 @@
+package io.github.choimari.moomoney;
+/**
+ * 프로그램 진입점, Scanner 입력 처리, 메뉴 루프 담당 클래스
+ */
+public class App { 
+	public static void main(String[] args) {
+		
+	}
+}
