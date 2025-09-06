@@ -1,11 +1,9 @@
 package io.github.choimari.moomoney.util;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,13 +35,13 @@ import io.github.choimari.moomoney.model.Role;
  * 로그 파일이 없으면 자동 생성
  */
 public class Logger {
-	private static final Logger INSTANCE;
 	private static final String LOG_FILE;
+	private static final Logger INSTANCE;
 	private final File logFile;
 	static { 
-		INSTANCE = new Logger(); // 즉시 초기화
 		LOG_FILE = "data/logs.csv"; //로그 파일 저장 경로(상대 경로 : 프로젝트 루트 기준)
 		//로그파일 -> 읽기 전용 권한 설정은 운영체제에서 처리
+		INSTANCE = new Logger(); // 즉시 초기화
 	}
 	
 	private Logger() { // 생성자 외부 호출 막음
@@ -163,4 +161,6 @@ public class Logger {
 
 	        return entries;
 	    }
+	 
+
 }
