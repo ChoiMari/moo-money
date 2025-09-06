@@ -9,6 +9,10 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
+
 import io.github.choimari.moomoney.model.EventType;
 import io.github.choimari.moomoney.model.LogEntry;
 import io.github.choimari.moomoney.model.ResultType;
@@ -108,12 +112,12 @@ public class Logger {
 		LogEntry entry = createEvent(id, role, eventType, result, detail);
 		
 		//CSV 기록
-		 try(BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
-			 writer.write(entry.toCsvLine()); // CSV 한 줄 기록
-		 }catch(IOException ex) {
-			 System.err.println("로그 기록 실패: " + ex.getMessage());
-		     ex.printStackTrace();
-		 }
+        try (CSVWriter writer = new CSVWriter(new FileWriter(logFile, true))) {
+            writer.writeNext(entry.toCsvArray()); // toCsvArray: String[]로 변환
+        } catch (IOException ex) {
+            System.err.println("로그 기록 실패: " + ex.getMessage());
+            ex.printStackTrace();
+        }
 	}
 	
 	 /**
@@ -122,44 +126,41 @@ public class Logger {
      * @param requesterRole 요청자 권한
      * @return 로그 리스트 (권한 없으면 빈 리스트)
      */
-    public List<LogEntry> readAll(Role requesterRole) {
-        if (requesterRole != Role.SYSTEM) {
-            System.err.println("로그 읽기 권한 없음: SYSTEM 관리자만 접근 가능");
-            return new ArrayList<>();
-        }
+	 public List<LogEntry> readAll(Role requesterRole) {
+	        if (requesterRole != Role.SYSTEM) {
+	            System.err.println("로그 읽기 권한 없음: SYSTEM 관리자만 접근 가능");
+	            return new ArrayList<>();
+	        }
 
-        List<LogEntry> entries = new ArrayList<>();
-        if (!logFile.exists()) return entries;
+	        List<LogEntry> entries = new ArrayList<>();
+	        if (!logFile.exists()) return entries;
 
-        try {
-            // 파일 전체를 한 번에 읽기
-            List<String> lines = Files.readAllLines(logFile.toPath());
+	        try (CSVReader reader = new CSVReader(new FileReader(logFile))) {
+	            List<String[]> lines = reader.readAll(); // 통으로 읽기
+	            for (String[] tokens : lines) {
+	                if (tokens.length < 6) continue;
 
-            // 각 줄을 LogEntry로 변환
-            for (String line : lines) {
-                String[] tokens = line.split(",", 6);
-                if (tokens.length < 6) continue;
+	                Long id = "ANONYMOUS".equals(tokens[1]) || "GUEST".equals(tokens[1]) ? null : Long.parseLong(tokens[1]);
+	                Role role = Role.valueOf(tokens[2]);
+	                EventType event = EventType.valueOf(tokens[3]);
+	                ResultType result = ResultType.valueOf(tokens[4]);
+	                String detail = tokens[5];
 
-                Long id = "ANONYMOUS".equals(tokens[1]) || "GUEST".equals(tokens[1]) ? null : Long.parseLong(tokens[1]);
-                Role role = Role.valueOf(tokens[2]);
-                EventType event = EventType.valueOf(tokens[3]);
-                ResultType result = ResultType.valueOf(tokens[4]);
-                String detail = tokens[5];
+	                entries.add(LogEntry.builder()
+	                        .id(id)
+	                        .role(role)
+	                        .eventType(event)
+	                        .resultType(result)
+	                        .detailMessage(detail)
+	                        .build());
+	            }
+	        } catch (IOException ex) {
+	            System.err.println("로그 읽기 실패: " + ex.getMessage());
+	            ex.printStackTrace();
+	        } catch (CsvException e) {
+	            e.printStackTrace(); // CSV 파싱 오류 처리
+	        }
 
-                LogEntry entry = LogEntry.builder()
-                        .id(id)
-                        .role(role)
-                        .eventType(event)
-                        .resultType(result)
-                        .detailMessage(detail)
-                        .build();
-                entries.add(entry);
-            }
-        } catch (IOException ex) {
-            System.err.println("로그 읽기 실패: " + ex.getMessage());
-            ex.printStackTrace();
-        }
-
-        return entries;
-    }
+	        return entries;
+	    }
 }

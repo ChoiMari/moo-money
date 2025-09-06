@@ -47,6 +47,7 @@ public class LogEntry {
             (resultType == null ? "UNSPECIFIED_RESULT" : resultType.name()),
             (detailMessage == null ? "" : detailMessage));
     }
+   
     
     /**
      * 파일 저장용
@@ -58,6 +59,7 @@ public class LogEntry {
      * 2025-09-06 18:00:00,123,USER,SIGNUP,SUCCESS,회원가입 완료
      * @return CSV 형식의 한 줄 문자열
      */
+    /*
     public String toCsvLine() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // 날짜/시간을 특정 문자열 패턴으로 포맷(년-월-일 시:분:초 형태로 설정)
         return String.format("%s,%s,%s,%s,%s,%s\n",
@@ -67,6 +69,24 @@ public class LogEntry {
             (eventType == null ? "UNSPECIFIED_EVENT" : eventType.name()),
             (resultType == null ? "UNSPECIFIED_RESULT" : resultType.name()),
             (detailMessage == null ? "" : detailMessage));
+    }
+    */
+    
+    /**
+     * OpenCSV용 CSV 배열 반환
+     * CSVWriter.writeNext()에 바로 전달 가능
+     * 쉼표나 따옴표, 개행 같은 특수문자 처리는 OpenCSV의 CSVWriter가 자동으로 해준다
+     * @return LogEntry → String[] 배열로만 넘기면 OpenCSV 입장에서는 String[] 한 줄이 CSV 한 레코드(row).
+     */
+    public String[] toCsvArray() {
+        return new String[] {
+            timestamp.format(FORMATTER),
+            id == null ? roleNameForAnonymous() : id.toString(),
+            role == null ? "UNKNOWN" : role.name(),
+            eventType == null ? "UNSPECIFIED_EVENT" : eventType.name(),
+            resultType == null ? "UNSPECIFIED_RESULT" : resultType.name(),
+            detailMessage == null ? "" : detailMessage
+        };
     }
     
     /**
