@@ -2,6 +2,7 @@ package io.github.choimari.moomoney.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +11,8 @@ import lombok.AccessLevel;
 /**
  * [회원] 모델 클래스
  */
-@Builder @AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@Builder @AllArgsConstructor @Getter @Setter
+@EqualsAndHashCode 
 public class User {
 	private Long id; // 시퀀스 PK로 사용
 	private String email;
@@ -37,5 +39,14 @@ public class User {
 //    public void setPasswordRaw(String rawPassword) {
 //        this.password = PasswordUtils.hash(rawPassword);
 //    }
+	
+    /**
+     *  등급 업그레이드
+     */
+    public void upgradeToPremium() {
+        if(role == Role.REGULAR_MEMBER) {
+            role = Role.PREMIUM_MEMBER;
+        }
+    }
 	
 }
