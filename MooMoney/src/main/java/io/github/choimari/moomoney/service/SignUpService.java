@@ -76,6 +76,33 @@ public class SignUpService {
         return nicknamePattern.matcher(nickname).matches(); // 패턴 일치 여부
     }
     
+    /**
+     * 이메일 중복 체크
+     * @param email
+     * @return true: 중복 있음, false: 중복 없음
+     */
+    public boolean checkEmailDuplicate(String email) {
+        try {
+            return tUserRepo.existsByEmail(email);
+        } catch (IOException e) {
+            System.out.println("[ERROR] 이메일 중복 검사 실패: " + e.getMessage());
+            return true; // 안전하게 중복 처리(에러 시 사용불가 처리)
+        }
+    }
+
+    /**
+     * 닉네임 중복 체크
+     * @param nickname
+     * @return true: 중복 있음, false: 중복 없음
+     */
+    public boolean checkNicknameDuplicate(String nickname) {
+        try {
+            return tUserRepo.existsByNickname(nickname);
+        } catch (IOException e) {
+            System.out.println("[ERROR] 닉네임 중복 검사 실패: " + e.getMessage());
+            return true; // 안전하게 중복 처리(에러 시 사용불가 처리)
+        }
+    }
     
     /**
      * 회원 가입 처리
