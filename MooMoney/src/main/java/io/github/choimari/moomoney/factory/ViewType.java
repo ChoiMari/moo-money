@@ -1,11 +1,11 @@
 package io.github.choimari.moomoney.factory;
 
 public enum ViewType {
-	GUEST("손님 메뉴"),
-	REGULAR("일반 회원 메뉴"),
-	PREMIUM("프리미엄 회원 메뉴"),
-	ADMIN("관리자 메뉴"),
-	SYSTEM("시스템 메뉴"),
+	GUEST("방문객"),
+	REGULAR("일반 회원"),
+	PREMIUM("프리미엄 회원"),
+	ADMIN("관리자"),
+	SYSTEM("시스템"),
 	MAIN("메인"),
 	LOGIN("로그인"),
 	SIGNUP("회원가입"),

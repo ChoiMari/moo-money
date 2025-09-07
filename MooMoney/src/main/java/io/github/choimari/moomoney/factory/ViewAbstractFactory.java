@@ -1,5 +1,6 @@
 package io.github.choimari.moomoney.factory;
 
+import io.github.choimari.moomoney.controller.BaseController;
 import io.github.choimari.moomoney.util.InputReader;
 import io.github.choimari.moomoney.views.View;
 /**
@@ -11,11 +12,6 @@ ViewType(enum)을 기준으로 어떤 화면(View) 객체를 생성할지 결정
  */
 public abstract class ViewAbstractFactory {
 	
-    protected final InputReader reader;
-
-    protected ViewAbstractFactory(InputReader reader) {
-        this.reader = reader;
-    }
 	 /**
      * 뷰 객체 생성 메서드
      * @param viewType 생성할 뷰 타입(enum)
@@ -24,5 +20,5 @@ public abstract class ViewAbstractFactory {
      * - 실제 생성 로직은 구체 팩토리 클래스에서 구현
      * - 팩토리 패턴 적용: 객체 생성 책임을 팩토리로 분리
      */
-	abstract View createView(ViewType viewType);
+    public abstract View createView(ViewType viewType, BaseController baseController);
 }

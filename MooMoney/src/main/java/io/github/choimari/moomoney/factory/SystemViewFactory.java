@@ -1,5 +1,6 @@
 package io.github.choimari.moomoney.factory;
 
+import io.github.choimari.moomoney.controller.BaseController;
 import io.github.choimari.moomoney.util.InputReader;
 import io.github.choimari.moomoney.views.LogTraceView;
 import io.github.choimari.moomoney.views.View;
@@ -9,14 +10,10 @@ import io.github.choimari.moomoney.views.View;
  */
 public class SystemViewFactory extends ViewAbstractFactory{
 
-	protected SystemViewFactory(InputReader reader) {
-		super(reader);
-	}
-
 	@Override
-	View createView(ViewType viewType) {
+	public View createView(ViewType viewType, BaseController baseController) {
         switch(viewType) {
-	    	case SYSTEM: return new LogTraceView(reader);
+	    	case SYSTEM: return new LogTraceView();
 	        default: return null;
         }
 	}

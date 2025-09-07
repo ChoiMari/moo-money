@@ -1,5 +1,6 @@
 package io.github.choimari.moomoney.factory;
 
+import io.github.choimari.moomoney.controller.BaseController;
 import io.github.choimari.moomoney.util.InputReader;
 import io.github.choimari.moomoney.views.ExpenseSummaryView;
 import io.github.choimari.moomoney.views.View;
@@ -9,14 +10,10 @@ import io.github.choimari.moomoney.views.View;
  */
 public class AdminViewFactory extends ViewAbstractFactory{
 
-	protected AdminViewFactory(InputReader reader) {
-		super(reader);
-	}
-
 	@Override
-	View createView(ViewType viewType) {
+	public View createView(ViewType viewType, BaseController baseController) {
         switch(viewType) {
-	    	case EXPENSE_SUMMARY: return new ExpenseSummaryView(reader);
+	    	case EXPENSE_SUMMARY: return new ExpenseSummaryView();
 	        default: return null;
         }
 	}

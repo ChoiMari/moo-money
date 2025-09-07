@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import com.opencsv.CSVWriter;
 
-import io.github.choimari.moomoney.model.User;
+import io.github.choimari.moomoney.domain.User;
 
 /**
  * 회원 가입한 사용자의 정보를 파일 기반(.csv)으로 저장

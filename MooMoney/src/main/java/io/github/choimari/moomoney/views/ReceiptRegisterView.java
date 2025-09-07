@@ -5,10 +5,6 @@ import io.github.choimari.moomoney.util.InputReader;
 
 public class ReceiptRegisterView extends AbstractView{
 
-	public ReceiptRegisterView(InputReader reader) {
-		super(reader);
-	}
-
 	@Override
 	protected void showContent() {
 		

@@ -9,16 +9,9 @@ import io.github.choimari.moomoney.views.View;
  * 템플릿 메서드 패턴 적용: show()는 공통 구조(헤더 → 내용 → 푸터) 제공
  * 각 뷰는 showContent()만 구현하면 됨
  * 헤더랑 푸터가 맘에 안들면 protected로 바꿔서 각 뷰에서 따로 오버라이드 하게 해도 된다.
- * InputReader를 공통으로 가지고 있어서, 뷰마다 입력 처리 중복 제거
  */
 public abstract class AbstractView implements View {
-	// 모든 뷰에서 공유하는 콘솔 입력 객체
-    protected final InputReader reader;
 
-    public AbstractView(InputReader reader) {
-        this.reader = reader;
-    }
-	
 	/**
 	 *  템플릿 메서드
 	 * - show() 호출 시 전체 화면 구조를 정의
@@ -36,8 +29,8 @@ public abstract class AbstractView implements View {
      * 화면 상단 헤더 출력
      * 필요시 protected로 바꾸면 서브 클래스에서 재정의 가능
      */
-    private void printHeader() {
-        System.out.println("===== 한눈에 지출 =====");
+    protected void printHeader() {
+        System.out.println("============================================");
     }
 
     /**
@@ -49,8 +42,8 @@ public abstract class AbstractView implements View {
      * 화면 하단 푸터 출력
      * 필요시 protected로 바꾸면 서브 클래스에서 재정의 가능
      */
-    private void printFooter() {
-        System.out.println("=======================");
+    protected void printFooter() {
+        System.out.println("============================================");
     }
 }
 

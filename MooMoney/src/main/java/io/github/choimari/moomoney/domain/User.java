@@ -1,4 +1,4 @@
-package io.github.choimari.moomoney.model;
+package io.github.choimari.moomoney.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

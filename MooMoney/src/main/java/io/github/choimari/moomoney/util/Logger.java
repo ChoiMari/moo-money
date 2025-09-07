@@ -11,10 +11,10 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
 
-import io.github.choimari.moomoney.model.EventType;
-import io.github.choimari.moomoney.model.LogEntry;
-import io.github.choimari.moomoney.model.ResultType;
-import io.github.choimari.moomoney.model.Role;
+import io.github.choimari.moomoney.domain.EventType;
+import io.github.choimari.moomoney.domain.LogEntry;
+import io.github.choimari.moomoney.domain.ResultType;
+import io.github.choimari.moomoney.domain.Role;
 /**
  * 로그/추적 기능 클래스 - 모든 서비스에서 공용(static 자원) 사용 가능
  * 싱글톤으로 관리, 로그 기록 및 읽기 지원

@@ -1,6 +1,7 @@
 package io.github.choimari.moomoney.factory;
 
-import io.github.choimari.moomoney.util.InputReader;
+import io.github.choimari.moomoney.controller.BaseController;
+import io.github.choimari.moomoney.controller.GuestController;
 import io.github.choimari.moomoney.views.GuestMenuView;
 import io.github.choimari.moomoney.views.LoginView;
 import io.github.choimari.moomoney.views.MainView;
@@ -12,10 +13,6 @@ import io.github.choimari.moomoney.views.View;
  * ViewType enum에 따라 어떤 화면(View) 객체를 생성할지 결정
  */
 public class GuestViewFactory extends ViewAbstractFactory{
-    
-    protected GuestViewFactory(InputReader reader) {
-		super(reader);
-	}
 
 	/**
      * View 객체 생성 메서드
@@ -28,12 +25,12 @@ public class GuestViewFactory extends ViewAbstractFactory{
      * - SIGNUP: 회원가입 화면
      */
 	@Override
-    public View createView(ViewType viewType) {
+    public View createView(ViewType viewType, BaseController baseController) {
         switch(viewType) {
-        	case GUEST: return new GuestMenuView(reader);
-            case MAIN: return new MainView(reader);
-            case LOGIN: return new LoginView(reader);
-            case SIGNUP: return new SignupView(reader);
+        	case GUEST: return new GuestMenuView((GuestController) baseController);
+            case MAIN: return new MainView();
+            case LOGIN: return new LoginView();
+            case SIGNUP: return new SignupView();
             default: return null;
         }
     }
