@@ -1,12 +1,13 @@
 package io.github.choimari.moomoney.controller;
 
+import io.github.choimari.moomoney.dto.LoginRequest;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.factory.ViewType;
 import io.github.choimari.moomoney.util.InputReader;
 import io.github.choimari.moomoney.views.View;
 
 public class GuestController extends BaseController{
-	private ViewAbstractFactory guestFactory;
+	private final ViewAbstractFactory guestFactory;
 	
 	public GuestController(InputReader reader, ViewAbstractFactory guestFactory) {
 		super(reader);
@@ -32,8 +33,20 @@ public class GuestController extends BaseController{
         }  
 	}
 	
+	/**
+	 * View에서 호출해서 리턴받는 용도
+	 * @return 사용자 입력값
+	 */
 	public String input() {
 		return reader.readLine("입력 : ");
+	}
+	
+	/**
+	 * 로그인
+	 * @return 결과
+	 */
+	public boolean login(LoginRequest dto) {
+		return false;
 	}
 		
 }

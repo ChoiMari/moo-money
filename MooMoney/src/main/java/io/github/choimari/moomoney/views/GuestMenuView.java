@@ -5,7 +5,7 @@ import io.github.choimari.moomoney.factory.AbstractView;
 import io.github.choimari.moomoney.factory.ViewType;
 
 public class GuestMenuView extends AbstractView{
-	private GuestController guestController;
+	private final GuestController guestController;
 	
 	public GuestMenuView(GuestController guestController) {
 		this.guestController = guestController;

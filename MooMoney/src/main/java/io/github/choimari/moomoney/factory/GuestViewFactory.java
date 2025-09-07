@@ -25,11 +25,11 @@ public class GuestViewFactory extends ViewAbstractFactory{
      * - SIGNUP: 회원가입 화면
      */
 	@Override
-    public View createView(ViewType viewType, BaseController baseController) {
+    public View createView(ViewType viewType, BaseController baseController) {// TODO : instanceof로 타입체크 추가하기
         switch(viewType) {
         	case GUEST: return new GuestMenuView((GuestController) baseController);
             case MAIN: return new MainView();
-            case LOGIN: return new LoginView();
+            case LOGIN: return new LoginView((GuestController) baseController);
             case SIGNUP: return new SignupView();
             default: return null;
         }
