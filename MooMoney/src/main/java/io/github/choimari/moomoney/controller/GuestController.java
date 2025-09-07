@@ -7,7 +7,7 @@ import io.github.choimari.moomoney.dto.LoginRequest;
 import io.github.choimari.moomoney.dto.SignUpRequest;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.factory.ViewType;
-import io.github.choimari.moomoney.repository.UserRepository;
+import io.github.choimari.moomoney.repository.TXTUserRepository;
 import io.github.choimari.moomoney.service.LoginService;
 import io.github.choimari.moomoney.service.SignUpService;
 import io.github.choimari.moomoney.util.InputReader;

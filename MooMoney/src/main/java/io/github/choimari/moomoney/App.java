@@ -5,7 +5,7 @@ import io.github.choimari.moomoney.controller.GuestController;
 import io.github.choimari.moomoney.controller.MainController;
 import io.github.choimari.moomoney.factory.GuestViewFactory;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
-import io.github.choimari.moomoney.repository.UserRepository;
+import io.github.choimari.moomoney.repository.TXTUserRepository;
 import io.github.choimari.moomoney.service.LoginService;
 import io.github.choimari.moomoney.service.SignUpService;
 import io.github.choimari.moomoney.util.InputReader;
@@ -23,7 +23,7 @@ public class App {
 		// 게스트(비회원) 화면을 만드는 뷰 팩토리 객체
         ViewAbstractFactory guestFactory = new GuestViewFactory();
         LoginService loginService = new LoginService();
-        UserRepository userRepo = new UserRepository();
+        TXTUserRepository userRepo = new TXTUserRepository();
         SignUpService signUpService = new SignUpService(userRepo);
         
         GuestController guestController = new GuestController(reader, guestFactory, loginService, signUpService);

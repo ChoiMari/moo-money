@@ -1,8 +1,12 @@
 package io.github.choimari.moomoney.service;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
-import io.github.choimari.moomoney.repository.UserRepository;
+import io.github.choimari.moomoney.domain.User;
+import io.github.choimari.moomoney.dto.SignUpRequest;
+import io.github.choimari.moomoney.repository.TXTUserRepository;
+import io.github.choimari.moomoney.util.PasswordUtils;
 /**
  * 회원가입 처리 서비스
  * 유효성 체크
@@ -30,8 +34,8 @@ public class SignUpService {
     private final String nicknameRegex = "^[가-힣a-zA-Z0-9]{2,12}$";
     private final Pattern nicknamePattern = Pattern.compile(nicknameRegex);
     
-    private final UserRepository userRepo;
-    public SignUpService(UserRepository userRepo) {
+    private final TXTUserRepository userRepo;
+    public SignUpService(TXTUserRepository userRepo) {
     	this.userRepo = userRepo;
     }
 
@@ -73,4 +77,23 @@ public class SignUpService {
      * 이메일 중복 검사
      */
     //public boolean 
+    
+    /**
+     * 회원 가입 처리
+     * DTO -> User 변환
+     * 비밀번호 암호화
+     * 레파지토리 메서드 호출(-> 저장)
+     */
+    public void register(SignUpRequest dto) throws IOException{
+    	String[] saltAndHash = PasswordUtils.hashPassword(dto.getPassword());
+    	User user = User.builder()
+    			.email(dto.getEmail())
+    			.passwordSalt(saltAndHash[0])
+    			.passwordHash(saltAndHash[1])
+    			.role(dto.getRole())
+    			.nickname(dto.getNickname())
+    			.build();
+    	userRepo.save(user); // 파일에 저장(확장 시 DB)
+    }
+    
 }
