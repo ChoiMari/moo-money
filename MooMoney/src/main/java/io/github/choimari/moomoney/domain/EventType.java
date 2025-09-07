@@ -1,4 +1,4 @@
-package io.github.choimari.moomoney.model;
+package io.github.choimari.moomoney.domain;
 
 public enum EventType {
 	SIGNUP("회원가입"),

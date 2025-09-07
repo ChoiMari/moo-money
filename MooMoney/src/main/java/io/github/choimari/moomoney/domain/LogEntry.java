@@ -1,4 +1,4 @@
-package io.github.choimari.moomoney.model;
+package io.github.choimari.moomoney.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

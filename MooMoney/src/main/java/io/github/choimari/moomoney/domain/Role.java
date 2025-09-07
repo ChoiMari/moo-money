@@ -1,4 +1,4 @@
-package io.github.choimari.moomoney.model;
+package io.github.choimari.moomoney.domain;
 
 public enum Role {
 	GUEST("비회원"), // public static final UserType = new UserType("비회원"); 과 같음. 공유 불변 객체 참조변수
