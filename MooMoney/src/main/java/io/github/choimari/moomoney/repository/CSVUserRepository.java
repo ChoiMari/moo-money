@@ -7,6 +7,7 @@ import java.io.IOException;
 import com.opencsv.CSVWriter;
 
 import io.github.choimari.moomoney.domain.User;
+import io.github.choimari.moomoney.dto.SignUpRequest;
 
 /**
  * 회원 가입한 사용자의 정보를 파일 기반(.csv)으로 저장
@@ -62,10 +63,5 @@ public class CSVUserRepository implements IUserRepository{
 		
 	}
 
-	@Override
-	public boolean existsByEmail(String email) {
-		
-		return false;
-	}
 
 }

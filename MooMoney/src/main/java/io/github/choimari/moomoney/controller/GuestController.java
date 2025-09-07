@@ -2,7 +2,9 @@ package io.github.choimari.moomoney.controller;
 
 import java.util.Map;
 
+import io.github.choimari.moomoney.domain.Role;
 import io.github.choimari.moomoney.dto.LoginRequest;
+import io.github.choimari.moomoney.dto.SignUpRequest;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.factory.ViewType;
 import io.github.choimari.moomoney.service.LoginService;
@@ -64,10 +66,60 @@ public class GuestController extends BaseController{
 	 */
 	
 	/**
-	 * 유효성 검사
+	 * 유효성 검사 (회원가입 처리에 필요)
+	 * @param info Map<필드명, 사용자 입력값>
+	 * @return true: 모두 유효, false: 하나라도 유효하지 않음
 	 */
 	public boolean validation(Map<String, String> info) {
-		
-		return false;
+	    String email = info.get("email");
+	    String pw = info.get("pw");
+	    String ckpw = info.get("ckpw");
+	    String nickname = info.get("nickname");
+	    String roleChoice= info.get("role");
+
+	    boolean valid = true;
+
+	    // 이메일 유효성 체크
+	    if (!signUpSvc.validationEmail(email)) {
+	        System.out.println("[오류] 이메일 형식이 올바르지 않습니다.");
+	        valid = false;
+	    }
+
+	    // 비밀번호 유효성 체크
+	    if (!signUpSvc.validationPassword(pw)) {
+	        System.out.println("[오류] 비밀번호는 최소 8자리, 영문+숫자+특수문자(@#$%^&+=!) 조합이어야 합니다.");
+	        valid = false;
+	    }
+
+	    // 비밀번호 확인
+	    if (!pw.equals(ckpw)) {
+	        System.out.println("[오류] 비밀번호와 확인이 일치하지 않습니다.");
+	        valid = false;
+	    }
+
+	    // 닉네임 유효성 체크
+	    if (!signUpSvc.validationNickname(nickname)) {
+	        System.out.println("[오류] 닉네임은 2~12자, 한글/영문/숫자만 가능합니다.");
+	        valid = false;
+	    }
+
+	    // 회원 등급
+	    Role role = null;;
+	    switch (roleChoice) {
+	        case "1": role = Role.REGULAR_MEMBER; break;
+	        case "2": role = Role.PREMIUM_MEMBER; break;
+	        default:
+	            System.out.println("[오류] 회원 등급은 1(일반) 또는 2(프리미엄)만 가능합니다.");
+	            valid = false;
+	    }
+
+
+	    if(valid) {
+	        // 모두 통과 시 실제 회원가입 서비스 호출
+	        SignUpRequest dto = new SignUpRequest(email, pw, role, nickname);
+	        //signUpSvc.register(dto); // 서비스에서 DB 저장 또는 파일 저장 처리
+	    }
+
+	    return valid;
 	}
 }

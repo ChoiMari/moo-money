@@ -7,6 +7,7 @@ import io.github.choimari.moomoney.controller.GuestController;
 import io.github.choimari.moomoney.dto.LoginRequest;
 import io.github.choimari.moomoney.factory.AbstractView;
 import io.github.choimari.moomoney.factory.ViewType;
+import io.github.choimari.moomoney.util.ConsoleStyle;
 public class LoginView extends AbstractView{
 	
 	private final GuestController guestController;
@@ -17,7 +18,7 @@ public class LoginView extends AbstractView{
 	@Override
     protected void printHeader() {
     	System.out.println("============================================");
-        System.out.printf("\n<🔐 %s>\n\n", ViewType.LOGIN.getType());
+        System.out.printf(ConsoleStyle.apply("<🔐 %s>\n\n", ConsoleStyle.BLUE), ViewType.LOGIN.getType());
     }
 	
 	@Override
