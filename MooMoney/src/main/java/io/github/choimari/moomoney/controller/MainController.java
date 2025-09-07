@@ -1,10 +1,9 @@
 package io.github.choimari.moomoney.controller;
 
 
-import io.github.choimari.moomoney.factory.ControllerFactory;
+
 import io.github.choimari.moomoney.factory.ControllerType;
 import io.github.choimari.moomoney.factory.GuestViewFactory;
-import io.github.choimari.moomoney.factory.RoleControllerFactory;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.factory.ViewType;
 import io.github.choimari.moomoney.util.InputReader;
@@ -12,19 +11,17 @@ import io.github.choimari.moomoney.views.View;
 
 public class MainController extends BaseController{
 	// 주입 받음
-    private final ControllerFactory controllerFactory;
     private final ViewAbstractFactory guestFactory;
+    private final GuestController guestController;
     
-    
-    public MainController(InputReader reader, ControllerFactory controllerFactory, ViewAbstractFactory guestFactory) {
+    public MainController(InputReader reader, ViewAbstractFactory guestFactory, GuestController guestController) {
 		super(reader);
-		this.controllerFactory = controllerFactory;
 		this.guestFactory = guestFactory;
+		this.guestController = guestController;
     }
 
 	public void run() {
         View mainView = guestFactory.createView(ViewType.MAIN, this); // 팩토리로 메인 뷰 객체 생성
-        BaseController guestController = controllerFactory.createController(reader, ControllerType.GUEST, guestFactory); //팩토리로 컨트롤러 객체 생성
         boolean running = true; // 반복 제어
         
         while(running) {

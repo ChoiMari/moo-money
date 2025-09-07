@@ -1,8 +1,12 @@
 package io.github.choimari.moomoney.controller;
 
+import java.util.Map;
+
 import io.github.choimari.moomoney.dto.LoginRequest;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.factory.ViewType;
+import io.github.choimari.moomoney.service.LoginService;
+import io.github.choimari.moomoney.service.SignUpService;
 import io.github.choimari.moomoney.util.InputReader;
 import io.github.choimari.moomoney.views.View;
 /**
@@ -10,10 +14,14 @@ import io.github.choimari.moomoney.views.View;
  */
 public class GuestController extends BaseController{
 	private final ViewAbstractFactory guestFactory;
+	private final LoginService loginSvc;
+	private final SignUpService signUpSvc;
 	
-	public GuestController(InputReader reader, ViewAbstractFactory guestFactory) {
+	public GuestController(InputReader reader, ViewAbstractFactory guestFactory, LoginService loginSvc, SignUpService signUpSvc) {
 		super(reader);
 		this.guestFactory = guestFactory;
+		this.signUpSvc = signUpSvc;
+		this.loginSvc = loginSvc;
 	}
 
 	@Override
@@ -54,5 +62,12 @@ public class GuestController extends BaseController{
 	/**
 	 * 회원 가입 
 	 */
+	
+	/**
+	 * 유효성 검사
+	 */
+	public boolean validation(Map<String, String> info) {
 		
+		return false;
+	}
 }
