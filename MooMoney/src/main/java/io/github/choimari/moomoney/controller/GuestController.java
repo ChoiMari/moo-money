@@ -5,7 +5,9 @@ import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.factory.ViewType;
 import io.github.choimari.moomoney.util.InputReader;
 import io.github.choimari.moomoney.views.View;
-
+/**
+ * 로그인 전 “손님” 입장에서 단순 메뉴/화면 이동 담당
+ */
 public class GuestController extends BaseController{
 	private final ViewAbstractFactory guestFactory;
 	
@@ -23,7 +25,7 @@ public class GuestController extends BaseController{
         boolean running = true;
         while(running) {
         	guestView.show(); // 비 로그인 시 메뉴화면 출력
-            String choice = input();
+            String choice = input("입력 : ");
             switch(choice) {
                 case "1": loginView.show(); break; // 로그인 선택
                 case "2": signupView.show(); break; // 회원가입 선택
@@ -37,8 +39,8 @@ public class GuestController extends BaseController{
 	 * View에서 호출해서 리턴받는 용도
 	 * @return 사용자 입력값
 	 */
-	public String input() {
-		return reader.readLine("입력 : ");
+	public String input(String prompt) {
+		return reader.readLine(prompt);
 	}
 	
 	/**
@@ -48,5 +50,9 @@ public class GuestController extends BaseController{
 	public boolean login(LoginRequest dto) {
 		return false;
 	}
+	
+	/**
+	 * 회원 가입 
+	 */
 		
 }

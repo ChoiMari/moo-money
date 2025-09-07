@@ -15,7 +15,7 @@ public class GuestMenuView extends AbstractView{
 	@Override
     protected void printHeader() {
 		System.out.println("=============================================");
-        System.out.printf("<%s 메뉴>\n\n",ViewType.GUEST.getType());
+        System.out.printf("<😺 %s 메뉴>\n\n",ViewType.GUEST.getType());
     }
 
 	@Override

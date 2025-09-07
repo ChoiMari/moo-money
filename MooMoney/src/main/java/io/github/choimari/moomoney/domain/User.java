@@ -27,9 +27,7 @@ public class User {
     private String passwordSalt; // 비밀번호 Salt
  
 	private Role role;
-	private String name;
 	private String nickname;
-	private String phone;
 	
 	/**
      * 비밀번호 설정 메서드
