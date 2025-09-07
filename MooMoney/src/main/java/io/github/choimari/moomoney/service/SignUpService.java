@@ -1,6 +1,8 @@
 package io.github.choimari.moomoney.service;
 
 import java.util.regex.Pattern;
+
+import io.github.choimari.moomoney.repository.UserRepository;
 /**
  * 회원가입 처리 서비스
  * 유효성 체크
@@ -27,6 +29,11 @@ public class SignUpService {
     // 닉네임 정규식: 한글/영문/숫자, 2~12자
     private final String nicknameRegex = "^[가-힣a-zA-Z0-9]{2,12}$";
     private final Pattern nicknamePattern = Pattern.compile(nicknameRegex);
+    
+    private final UserRepository userRepo;
+    public SignUpService(UserRepository userRepo) {
+    	this.userRepo = userRepo;
+    }
 
 	
 	/**
@@ -61,4 +68,8 @@ public class SignUpService {
         if (nickname == null || nickname.trim().isEmpty()) return false; // null 또는 공백
         return nicknamePattern.matcher(nickname).matches(); // 패턴 일치 여부
     }
+    
+    /**
+     * 
+     */
 }

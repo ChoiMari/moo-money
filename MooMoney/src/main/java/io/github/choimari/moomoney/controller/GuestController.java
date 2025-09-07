@@ -7,6 +7,7 @@ import io.github.choimari.moomoney.dto.LoginRequest;
 import io.github.choimari.moomoney.dto.SignUpRequest;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.factory.ViewType;
+import io.github.choimari.moomoney.repository.UserRepository;
 import io.github.choimari.moomoney.service.LoginService;
 import io.github.choimari.moomoney.service.SignUpService;
 import io.github.choimari.moomoney.util.InputReader;
@@ -116,6 +117,8 @@ public class GuestController extends BaseController{
 
 	    if(valid) {
 	        // 모두 통과 시 실제 회원가입 서비스 호출
+	    	//dto 객체 생성 -> 서비스계층으로 전달 
+	    	// 서비스에서 -> User객체로 변환 -> 레파지토리에서 DB또는 파일로 저장처리(지금은 파일)
 	        SignUpRequest dto = new SignUpRequest(email, pw, role, nickname);
 	        //signUpSvc.register(dto); // 서비스에서 DB 저장 또는 파일 저장 처리
 	    }
