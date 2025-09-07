@@ -28,9 +28,9 @@ public class GuestViewFactory extends ViewAbstractFactory{
     public View createView(ViewType viewType, BaseController baseController) {// TODO : instanceof로 타입체크 추가하기
         switch(viewType) {
         	case GUEST: return new GuestMenuView((GuestController) baseController);
-            case MAIN: return new MainView();
+            case MAIN: return new MainView(); // 여기는 입력받는 로직이 없어서 필요없음
             case LOGIN: return new LoginView((GuestController) baseController);
-            case SIGNUP: return new SignupView();
+            case SIGNUP: return new SignupView((GuestController) baseController);
             default: return null;
         }
     }
