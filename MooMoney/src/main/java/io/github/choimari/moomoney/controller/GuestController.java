@@ -1,5 +1,6 @@
 package io.github.choimari.moomoney.controller;
 
+import java.io.IOException;
 import java.util.Map;
 
 import io.github.choimari.moomoney.domain.Role;
@@ -71,7 +72,7 @@ public class GuestController extends BaseController{
 	 * @param info Map<필드명, 사용자 입력값>
 	 * @return true: 모두 유효, false: 하나라도 유효하지 않음
 	 */
-	public boolean validation(Map<String, String> info) {
+	public boolean validationAndDuplicate(Map<String, String> info) {
 	    String email = info.get("email");
 	    String pw = info.get("pw");
 	    String ckpw = info.get("ckpw");
@@ -82,26 +83,38 @@ public class GuestController extends BaseController{
 
 	    // 이메일 유효성 체크
 	    if (!signUpSvc.validationEmail(email)) {
-	        System.out.println("[오류] 이메일 형식이 올바르지 않습니다.");
+	        System.out.println("이메일 형식이 올바르지 않습니다.");
 	        valid = false;
 	    }
-
+	    
+	    // 이메일 중복 검사
+	    if(signUpSvc.checkEmailDuplicate(email)) { // 중복이면 true
+	    	System.out.println("이미 사용중인 이메일 입니다.");
+	    	valid = false;
+	    }
+	    
 	    // 비밀번호 유효성 체크
 	    if (!signUpSvc.validationPassword(pw)) {
-	        System.out.println("[오류] 비밀번호는 최소 8자리, 영문+숫자+특수문자(@#$%^&+=!) 조합이어야 합니다.");
+	        System.out.println("비밀번호는 최소 8자리, 영문+숫자+특수문자(@#$%^&+=!) 조합이어야 합니다.");
 	        valid = false;
 	    }
 
 	    // 비밀번호 확인
 	    if (!pw.equals(ckpw)) {
-	        System.out.println("[오류] 비밀번호와 확인이 일치하지 않습니다.");
+	        System.out.println("비밀번호와 확인이 일치하지 않습니다.");
 	        valid = false;
 	    }
 
 	    // 닉네임 유효성 체크
 	    if (!signUpSvc.validationNickname(nickname)) {
-	        System.out.println("[오류] 닉네임은 2~12자, 한글/영문/숫자만 가능합니다.");
+	        System.out.println("닉네임은 2~12자, 한글/영문/숫자만 가능합니다.");
 	        valid = false;
+	    }
+	    
+	    //닉네임 중복 검사
+	    if(signUpSvc.checkNicknameDuplicate(nickname)) { // 중복이면 실행
+	    	System.out.println("이미 사용중인 닉네임 입니다.");
+	    	valid = false;
 	    }
 
 	    // 회원 등급
@@ -114,13 +127,17 @@ public class GuestController extends BaseController{
 	            valid = false;
 	    }
 
-
 	    if(valid) {
 	        // 모두 통과 시 실제 회원가입 서비스 호출
 	    	//dto 객체 생성 -> 서비스계층으로 전달 
 	    	// 서비스에서 -> User객체로 변환 -> 레파지토리에서 DB또는 파일로 저장처리(지금은 파일)
 	        SignUpRequest dto = new SignUpRequest(email, pw, role, nickname);
-	        //signUpSvc.register(dto); // 서비스에서 DB 저장 또는 파일 저장 처리
+	        try {
+				signUpSvc.signUp(dto); // 서비스에서 DB 저장 또는 파일 저장 처리
+			} catch (IOException e) {
+				System.out.println("[서버 오류] 다음에 다시 시도해주세요.");
+				e.printStackTrace();
+			} 
 	    }
 
 	    return valid;

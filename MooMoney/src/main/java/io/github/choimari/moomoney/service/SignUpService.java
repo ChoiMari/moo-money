@@ -110,7 +110,7 @@ public class SignUpService {
      * 비밀번호 암호화
      * 레파지토리 메서드 호출(-> 저장)
      */
-    public void register(SignUpRequest dto) throws IOException{
+    public void signUp(SignUpRequest dto) throws IOException{
     	String[] saltAndHash = PasswordUtils.hashPassword(dto.getPassword());
     	User user = User.builder()
     			.email(dto.getEmail())

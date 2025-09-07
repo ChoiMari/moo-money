@@ -41,7 +41,7 @@ public class SignupView extends AbstractView{
 		 	signUpInfo.put("nickname", guestController.input("닉네임 : "));
 		 	signUpInfo.put("role", guestController.input("회원 등급 선택(1.일반 / 2.프리미엄) : "));
 		 	System.out.println("===========================================\n");
-		 	success = guestController.validation(signUpInfo);
+		 	success = guestController.validationAndDuplicate(signUpInfo);
 
 		 	if (!success) {
 		     	System.out.println(ConsoleStyle.apply("다시 시도해주세요.\n", ConsoleStyle.ITALIC, ConsoleStyle.DARK_GREY));
