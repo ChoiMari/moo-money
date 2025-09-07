@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import io.github.choimari.moomoney.domain.User;
 import io.github.choimari.moomoney.dto.SignUpRequest;
+import io.github.choimari.moomoney.repository.CSVUserRepository;
 import io.github.choimari.moomoney.repository.TXTUserRepository;
 import io.github.choimari.moomoney.util.PasswordUtils;
 /**
@@ -34,9 +35,11 @@ public class SignUpService {
     private final String nicknameRegex = "^[가-힣a-zA-Z0-9]{2,12}$";
     private final Pattern nicknamePattern = Pattern.compile(nicknameRegex);
     
-    private final TXTUserRepository userRepo;
-    public SignUpService(TXTUserRepository userRepo) {
-    	this.userRepo = userRepo;
+    private final TXTUserRepository tUserRepo;
+    private final CSVUserRepository cUserRepo;
+    public SignUpService(TXTUserRepository tUserRepo, CSVUserRepository cUserRepo) {
+    	this.tUserRepo = tUserRepo;
+    	this.cUserRepo = cUserRepo;
     }
 
 	
@@ -73,10 +76,6 @@ public class SignUpService {
         return nicknamePattern.matcher(nickname).matches(); // 패턴 일치 여부
     }
     
-    /**
-     * 이메일 중복 검사
-     */
-    //public boolean 
     
     /**
      * 회원 가입 처리
@@ -93,7 +92,8 @@ public class SignUpService {
     			.role(dto.getRole())
     			.nickname(dto.getNickname())
     			.build();
-    	userRepo.save(user); // 파일에 저장(확장 시 DB)
+    	tUserRepo.save(user); // txt 파일에 저장(확장 시 DB에..)
+    	cUserRepo.save(user); // csv 파일에 저장 -> 학습용이라 여러개에 저장해봄.
     }
     
 }
