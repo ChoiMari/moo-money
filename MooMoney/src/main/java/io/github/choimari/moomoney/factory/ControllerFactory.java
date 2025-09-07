@@ -8,5 +8,5 @@ import io.github.choimari.moomoney.util.InputReader;
  * @return BaseController 하위 객체
  */
 public interface ControllerFactory {
-	 BaseController createController(InputReader reader, ControllerType type);
+	 BaseController createController(InputReader reader, ControllerType type, ViewAbstractFactory factory);
 }

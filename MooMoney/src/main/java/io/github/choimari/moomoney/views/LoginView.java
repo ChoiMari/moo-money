@@ -4,8 +4,6 @@ import io.github.choimari.moomoney.factory.AbstractView;
 import io.github.choimari.moomoney.factory.ViewType;
 public class LoginView extends AbstractView{
 
-	
-	
     protected void printHeader() {
         System.out.printf("\n<%s>", ViewType.LOGIN.getType());
     }

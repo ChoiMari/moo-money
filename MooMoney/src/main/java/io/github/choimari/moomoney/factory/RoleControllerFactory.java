@@ -10,14 +10,14 @@ import io.github.choimari.moomoney.util.InputReader;
 public class RoleControllerFactory implements ControllerFactory{
 
 	@Override
-	public BaseController createController(InputReader reader, ControllerType type) {
+	public BaseController createController(InputReader reader, ControllerType type, ViewAbstractFactory factory) {
 		switch (type) {
-        case GUEST: return new GuestController(reader);
-        case REGULAR: return new RegularController(reader);
-        case PREMIUM: return new PremiumController(reader);
-        case ADMIN: return new AdminController(reader);
-        default: return null;
-    }
+	        case GUEST: return new GuestController(reader, factory);
+	        case REGULAR: return new RegularController(reader);
+	        case PREMIUM: return new PremiumController(reader);
+	        case ADMIN: return new AdminController(reader);
+	        default: return null;
+		}
 	}
 
 }
