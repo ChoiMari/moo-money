@@ -24,9 +24,9 @@ public class GuestController extends BaseController{
         	guestView.show(); // 비 로그인 시 메뉴화면 출력
             String choice = input();
             switch(choice) {
-                case "1": loginView.show(); break;
-                case "2": signupView.show(); break;
-                case "3": running = false; break;
+                case "1": loginView.show(); break; // 로그인 선택
+                case "2": signupView.show(); break; // 회원가입 선택
+                case "3": running = false; break; // 이전 메뉴
                 default: System.out.println("[입력 오류] : 다시 입력해 주세요.");
             }
         }  
