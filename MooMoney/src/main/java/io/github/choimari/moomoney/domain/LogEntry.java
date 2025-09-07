@@ -16,7 +16,7 @@ import lombok.Getter;
 
 @AllArgsConstructor @Builder @Getter 
 public class LogEntry {
-	private final Long id; // 사용자 시퀀스 고유 번호(null 가능 - 비회원)
+	//private final Long id; // 사용자 시퀀스 고유 번호(null 가능 - 비회원)
 	private final Role role; // 권한
 	private final EventType eventType; // 어떤 이벤트에서 발생 했는지
 	private final ResultType resultType; // 결과
@@ -41,7 +41,7 @@ public class LogEntry {
     public String toString() {
         return String.format("[%s] id=%s, role=%s, event=%s, result=%s, detail=%s",
         	timestamp.format(FORMATTER),
-        	(id == null ? roleNameForAnonymous() : id),
+        	//(id == null ? roleNameForAnonymous() : id),
             (role == null ? "UNKNOWN" : role.name()),
             (eventType == null ? "UNSPECIFIED_EVENT" : eventType.name()),
             (resultType == null ? "UNSPECIFIED_RESULT" : resultType.name()),
@@ -81,7 +81,7 @@ public class LogEntry {
     public String[] toCsvArray() {
         return new String[] {
             timestamp.format(FORMATTER),
-            id == null ? roleNameForAnonymous() : id.toString(),
+            //id == null ? roleNameForAnonymous() : id.toString(),
             role == null ? "UNKNOWN" : role.name(),
             eventType == null ? "UNSPECIFIED_EVENT" : eventType.name(),
             resultType == null ? "UNSPECIFIED_RESULT" : resultType.name(),

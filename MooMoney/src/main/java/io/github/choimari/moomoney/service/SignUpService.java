@@ -70,6 +70,7 @@ public class SignUpService {
     }
     
     /**
-     * 
+     * 이메일 중복 검사
      */
+    //public boolean 
 }

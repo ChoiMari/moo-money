@@ -15,7 +15,7 @@ import lombok.AccessLevel;
 @Builder @AllArgsConstructor @Getter @Setter
 @EqualsAndHashCode 
 public class User {
-	private Long id; // 시퀀스 PK로 사용
+	//private Long id; // 시퀀스 PK로 사용
 	private String email;
 	
     @Getter(AccessLevel.NONE) // getter 생성 안함

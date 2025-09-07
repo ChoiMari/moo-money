@@ -87,7 +87,7 @@ public class Logger {
 	    }
 
 	    return LogEntry.builder()
-	            .id(id)
+	            //.id(id)
 	            .role(role)
 	            .eventType(eventType)
 	            .resultType(resultType)
@@ -136,7 +136,7 @@ public class Logger {
 	        try (CSVReader reader = new CSVReader(new FileReader(logFile))) {
 	            List<String[]> lines = reader.readAll(); // 통으로 읽기
 	            for (String[] tokens : lines) {
-	                if (tokens.length < 6) continue;
+	                if (tokens.length < 5) continue;
 
 	                Long id = "ANONYMOUS".equals(tokens[1]) || "GUEST".equals(tokens[1]) ? null : Long.parseLong(tokens[1]);
 	                Role role = Role.valueOf(tokens[2]);
@@ -145,7 +145,7 @@ public class Logger {
 	                String detail = tokens[5];
 
 	                entries.add(LogEntry.builder()
-	                        .id(id)
+	                       // .id(id)
 	                        .role(role)
 	                        .eventType(event)
 	                        .resultType(result)
