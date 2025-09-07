@@ -1,4 +1,4 @@
-package io.github.choimari.moomoney.model;
+package io.github.choimari.moomoney.domain;
 
 /**
  * 로그 / 추적용 처리 결과
