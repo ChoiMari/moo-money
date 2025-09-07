@@ -2,6 +2,7 @@ package io.github.choimari.moomoney.repository;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,6 +16,19 @@ import io.github.choimari.moomoney.domain.User;
  */
 public class TXTUserRepository implements IUserRepository{
 	private final String path = "data/users.txt"; // 저장할 경로 설정
+	private File file;
+	public TXTUserRepository() {
+		file = new File(path);
+		if (!file.exists()) { // 실제로 파일이 존재하지 않으면
+		    try {
+		    	file.getParentFile().mkdirs(); // 상위 폴더 없으면 생성
+				file.createNewFile(); // 파일 생성
+			} catch (IOException e) {
+				System.out.println("[ERROR] txt 파일 생성 실패: " + e.getMessage());
+				e.printStackTrace();
+			}        
+		}
+	}
 	
     /**
      *  이메일 중복 체크

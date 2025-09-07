@@ -80,13 +80,14 @@ public class SignUpService {
      * 이메일 중복 체크
      * @param email
      * @return true: 중복 있음, false: 중복 없음
+     * @throws IOException 파일 읽기 오류 시 발생
      */
-    public boolean checkEmailDuplicate(String email) {
+    public boolean checkEmailDuplicate(String email) throws IOException {
         try {
             return tUserRepo.existsByEmail(email);
         } catch (IOException e) {
             System.out.println("[ERROR] 이메일 중복 검사 실패: " + e.getMessage());
-            return true; // 안전하게 중복 처리(에러 시 사용불가 처리)
+            throw new IOException("[서버오류] 이메일 중복 검사 실패", e); 
         }
     }
 
@@ -94,13 +95,14 @@ public class SignUpService {
      * 닉네임 중복 체크
      * @param nickname
      * @return true: 중복 있음, false: 중복 없음
+     * @throws IOException 
      */
-    public boolean checkNicknameDuplicate(String nickname) {
+    public boolean checkNicknameDuplicate(String nickname) throws IOException {
         try {
             return tUserRepo.existsByNickname(nickname);
         } catch (IOException e) {
             System.out.println("[ERROR] 닉네임 중복 검사 실패: " + e.getMessage());
-            return true; // 안전하게 중복 처리(에러 시 사용불가 처리)
+            throw new IOException("[서버오류] 닉네임 중복 검사 실패", e); 
         }
     }
     

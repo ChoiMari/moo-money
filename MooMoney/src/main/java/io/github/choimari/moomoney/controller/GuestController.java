@@ -88,10 +88,15 @@ public class GuestController extends BaseController{
 	    }
 	    
 	    // 이메일 중복 검사
-	    if(signUpSvc.checkEmailDuplicate(email)) { // 중복이면 true
-	    	System.out.println("이미 사용중인 이메일 입니다.");
-	    	valid = false;
-	    }
+	    try {
+			if(signUpSvc.checkEmailDuplicate(email)) { // 중복이면 true
+				System.out.println("이미 사용중인 이메일 입니다.");
+				valid = false;
+			}
+		} catch (IOException e) {
+			System.out.println("[서버 오류] 잠시 후에 다시 시도해주세요.");
+			e.printStackTrace();
+		}
 	    
 	    // 비밀번호 유효성 체크
 	    if (!signUpSvc.validationPassword(pw)) {
@@ -112,10 +117,15 @@ public class GuestController extends BaseController{
 	    }
 	    
 	    //닉네임 중복 검사
-	    if(signUpSvc.checkNicknameDuplicate(nickname)) { // 중복이면 실행
-	    	System.out.println("이미 사용중인 닉네임 입니다.");
-	    	valid = false;
-	    }
+	    try {
+			if(signUpSvc.checkNicknameDuplicate(nickname)) { // 중복이면 실행
+				System.out.println("이미 사용중인 닉네임 입니다.");
+				valid = false;
+			}
+		} catch (IOException e) {
+			System.out.println("[서버 오류] 잠시 후에 다시 시도해주세요.");
+			e.printStackTrace();
+		}
 
 	    // 회원 등급
 	    Role role = null;;
