@@ -52,7 +52,7 @@ public class ReportService {
         // 보고서 문자열 생성
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("-------------------------------------------------------\n"));
-        sb.append(String.format("%-15s 💸%s 지출 보고서 💸\n", "", yearMonthStr));
+        sb.append(String.format("%-15s %s 지출 보고서 \n", "", yearMonthStr));
         sb.append(String.format("-------------------------------------------------------\n"));
         sb.append(String.format("%-12s %-15s %-10s\n", "날짜", "금액", "카테고리"));
         sb.append("-------------------------------------------------------\n");
@@ -73,9 +73,9 @@ public class ReportService {
         sb.append("-------------------------------------------------------\n");
         sb.append(String.format("총 합계: %,d원\n", totalSum));
         sb.append(String.format("\n%-10s요청 계정 : %s\n\n", "", email));
-        sb.append(String.format("%-15s-😸한눈에 지출-\n", "", email));
+        sb.append(String.format("%-15s-한눈에 지출-\n", "", email));
         // 콘솔 출력
-        System.out.println(ConsoleStyle.apply("\n" + sb.toString(), ConsoleStyle.BLACK));
+        System.out.println(ConsoleStyle.apply("\n" + sb.toString(), ConsoleStyle.GREEN));
 
         // 자동 저장
         String filename = String.format("%s-%s-월별보고서.txt", email, yearMonthStr);
@@ -108,7 +108,7 @@ public class ReportService {
 
         StringBuilder sb = new StringBuilder();
         sb.append("===========================================================\n");
-        sb.append(String.format("   📊 %s 카테고리별 지출 보고서 (%s) 📊\n", yearMonthStr, email));
+        sb.append(String.format("    %s 카테고리별 지출 보고서 (%s) \n", yearMonthStr, email));
         sb.append("===========================================================\n\n");
 
         for (var entry : categoryMap.entrySet()) {
@@ -131,9 +131,9 @@ public class ReportService {
             sb.append("-------------------------------------------------------\n");
             sb.append(String.format("소계 합계      : %,d원\n\n", sum));
         }
-        sb.append(String.format("%-15s-😸한눈에 지출-\n", "", email));
+        sb.append(String.format("%-15s-한눈에 지출-\n", "", email));
         // 콘솔 출력
-        System.out.println(sb);
+        System.out.println(ConsoleStyle.apply("\n" + sb.toString(), ConsoleStyle.PURPLE));
 
         // 자동 저장
         String filename = String.format("%s-%s-카테고리보고서.txt", email, yearMonthStr);
