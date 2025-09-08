@@ -10,7 +10,7 @@ public class RegularController extends BaseController {
 
 	@Override
 	public void run() {
-		System.out.println("나오니??");
+		
 	}
 
 }

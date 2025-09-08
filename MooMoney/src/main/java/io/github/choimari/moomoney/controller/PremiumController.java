@@ -10,7 +10,7 @@ public class PremiumController extends BaseController{
 
 	@Override
 	public void run() {
-		System.out.println("나오니??");
+		System.out.println("프리미엄나오니??");
 		
 	}
 
