@@ -14,6 +14,7 @@ package io.github.choimari.moomoney.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -28,7 +29,7 @@ public class InputReader {
 	static { // 즉시 초기화 : 클래스 로딩 시점에 바로 객체 생성(멀티 스레드 안전), InputReader 정도는 메모리에 크게 부담되지 않음
 		// 프로그램 시작할 때 거의 반드시 쓰게 되므로
 		INSTANCE = new InputReader();
-		READER = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+		READER = new BufferedReader(new InputStreamReader(System.in, Charset.forName("CP949")));
 	}
 	
 	private InputReader() {}
