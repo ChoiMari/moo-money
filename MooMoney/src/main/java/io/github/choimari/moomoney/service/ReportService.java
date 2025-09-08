@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -106,9 +107,9 @@ public class ReportService {
         int totalSum = monthlyReceipts.stream().mapToInt(ReceiptRequest::getPrice).sum();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("==========================================================\n");
+        sb.append("===========================================================\n");
         sb.append(String.format("   📊 %s 카테고리별 지출 보고서 (%s) 📊\n", yearMonthStr, email));
-        sb.append("==========================================================\n\n");
+        sb.append("===========================================================\n\n");
 
         for (var entry : categoryMap.entrySet()) {
             Category category = entry.getKey();
@@ -129,9 +130,8 @@ public class ReportService {
 
             sb.append("-------------------------------------------------------\n");
             sb.append(String.format("소계 합계      : %,d원\n\n", sum));
-            sb.append(String.format("%-15s-😸한눈에 지출-\n", "", email));
         }
-
+        sb.append(String.format("%-15s-😸한눈에 지출-\n", "", email));
         // 콘솔 출력
         System.out.println(sb);
 
@@ -142,7 +142,12 @@ public class ReportService {
 
     /** PrintWriter 사용해서 파일로 저장 */
     private void saveReportToFile(String filename, String content) throws IOException {
-        Path path = Path.of(filename);
+    	// 상대경로로 data/report 폴더 지정
+        Path dir = Paths.get("data", "report");
+        // 디렉토리가 없으면 생성
+        Files.createDirectories(dir);
+        // 저장할 파일 경로
+        Path path = dir.resolve(filename);
         try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(path))) {
             pw.print(content);
         }

@@ -117,9 +117,9 @@ public class PremiumController extends BaseController{
 	    // 연월 입력 + 검증
 	    while (true) {
 	        yearMonth = input("조회할 연월 입력 (예: 2025-09) : ").trim();
-	        System.out.println("\n");
+	        System.out.println();
 	        if (!yearMonth.matches("\\d{4}-(0[1-9]|1[0-2])")) {
-	            System.out.println("\n날짜 형식이 올바르지 않습니다. 예: 2025-09");
+	            System.out.println("날짜 형식이 올바르지 않습니다. 예: 2025-09");
 	            continue;
 	        }
 
