@@ -14,9 +14,11 @@ import io.github.choimari.moomoney.factory.RegularViewFactory;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.repository.CSVUserRepository;
 import io.github.choimari.moomoney.repository.ReceiptRepository;
+import io.github.choimari.moomoney.repository.ReportRepository;
 import io.github.choimari.moomoney.repository.TXTUserRepository;
 import io.github.choimari.moomoney.service.LoginService;
 import io.github.choimari.moomoney.service.ReceiptService;
+import io.github.choimari.moomoney.service.ReportService;
 import io.github.choimari.moomoney.service.SignUpService;
 import io.github.choimari.moomoney.util.InputReader;
 
@@ -36,10 +38,12 @@ public class App {
     private final TXTUserRepository tUserRepo;
     private final CSVUserRepository cUserRepo;
     private final ReceiptRepository receiptRepo;
+    private final ReportRepository reportRepo;
     
     private final LoginService loginService;
     private final SignUpService signUpService;
     private final ReceiptService receiptService;
+    private final ReportService reportService;
 
     private final GuestController guestController;
     private final MainController mainController;
@@ -59,15 +63,17 @@ public class App {
         this.tUserRepo = new TXTUserRepository();
         this.cUserRepo = new CSVUserRepository();
         this.receiptRepo = new ReceiptRepository();
+        this.reportRepo = new ReportRepository();
         		
         this.loginService = new LoginService(tUserRepo);
         this.signUpService = new SignUpService(tUserRepo, cUserRepo);
         this.receiptService = new ReceiptService(receiptRepo);
+        this.reportService = new ReportService(receiptRepo);
         
         this.guestController = new GuestController(reader, guestFactory, loginService, signUpService, this);
         this.mainController = new MainController(reader, guestFactory, guestController);
         this.regularController = new RegularController(reader, this, regularFactory, receiptService);
-        this.premiumController = new PremiumController(reader, this, regularFactory, receiptService, preminumFactory, regularController);
+        this.premiumController = new PremiumController(reader, this, regularFactory, receiptService, preminumFactory, regularController, reportService);
         this.adminController = new AdminController(reader);
         this.systemController = new SystemController();
     }
