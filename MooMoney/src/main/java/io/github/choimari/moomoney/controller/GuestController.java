@@ -136,7 +136,7 @@ public class GuestController extends BaseController{
 
 	    // 닉네임 유효성 체크
 	    if (!signUpSvc.validationNickname(nickname)) {
-	        System.out.println("닉네임은 2~12자, 한글/영문/숫자만 가능합니다.");
+	        System.out.println("닉네임은 2~12자, 한글/영문/숫자만 가능합니다.(공백포함불가)");
 	        valid = false;
 	    }
 	    

@@ -25,6 +25,7 @@ public class ConcreteControllerFactory  implements ControllerAbstractFactory {
     private final LoginService loginSvc; // 로그인 처리 서비스
     private final SignUpService signUpSvc; // 회원가입 처리 서비스
     private final ReceiptService receiptSvc;
+    private final RegularController regularController;
 
     /**
      * 생성자 주입(Constructor DI)
@@ -35,13 +36,15 @@ public class ConcreteControllerFactory  implements ControllerAbstractFactory {
             InputReader reader,
             ViewAbstractFactory viewFactory,
             App app,
-            ReceiptService receiptSvc) {
+            ReceiptService receiptSvc,
+            RegularController regularController) {
         this.reader = reader;
         this.viewFactory = viewFactory;
         this.app = app;
         this.loginSvc = loginSvc;
         this.signUpSvc = signUpSvc;
         this.receiptSvc = receiptSvc;
+        this.regularController = regularController;
     }
 
     /**
@@ -68,7 +71,7 @@ public class ConcreteControllerFactory  implements ControllerAbstractFactory {
      */
     @Override
     public PremiumController createPremiumController() {
-        return new PremiumController(reader);
+        return new PremiumController(reader, app, viewFactory, receiptSvc, viewFactory, regularController);
     }
 
     /**

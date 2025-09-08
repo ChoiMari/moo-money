@@ -9,6 +9,7 @@ import io.github.choimari.moomoney.controller.RegularController;
 import io.github.choimari.moomoney.controller.SystemController;
 import io.github.choimari.moomoney.domain.User;
 import io.github.choimari.moomoney.factory.GuestViewFactory;
+import io.github.choimari.moomoney.factory.PremiumViewFactory;
 import io.github.choimari.moomoney.factory.RegularViewFactory;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.repository.CSVUserRepository;
@@ -30,6 +31,7 @@ public class App {
 	private final InputReader reader;
     private final ViewAbstractFactory guestFactory;
     private final ViewAbstractFactory regularFactory;
+    private final ViewAbstractFactory preminumFactory;
     
     private final TXTUserRepository tUserRepo;
     private final CSVUserRepository cUserRepo;
@@ -52,6 +54,7 @@ public class App {
         
         this.guestFactory = new GuestViewFactory();
         this.regularFactory = new RegularViewFactory(this);
+        this.preminumFactory = new PremiumViewFactory(this);
         
         this.tUserRepo = new TXTUserRepository();
         this.cUserRepo = new CSVUserRepository();
@@ -64,7 +67,7 @@ public class App {
         this.guestController = new GuestController(reader, guestFactory, loginService, signUpService, this);
         this.mainController = new MainController(reader, guestFactory, guestController);
         this.regularController = new RegularController(reader, this, regularFactory, receiptService);
-        this.premiumController = new PremiumController(reader);
+        this.premiumController = new PremiumController(reader, this, regularFactory, receiptService, preminumFactory, regularController);
         this.adminController = new AdminController(reader);
         this.systemController = new SystemController();
     }
@@ -95,8 +98,10 @@ public class App {
                     	break;
                     case PREMIUM_MEMBER : premiumController.run();
                     	break;
-                    case ADMIN : adminController.run();
-                    	break;
+//                  case ADMIN : adminController.run();
+//                    	break;
+//                    case SYSTEM : systemController.run();
+//                    	break;
                     default : System.out.println("[ERROR] 알 수 없는 권한입니다.");
                 }
             }

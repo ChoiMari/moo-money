@@ -25,7 +25,7 @@ public class RegularViewFactory extends ViewAbstractFactory{
 	@Override
 	public View createView(ViewType viewType, BaseController baseController) {
         switch(viewType) {
-	    	case REGULAR: return new RegularMenuView(app, (RegularController) baseController);
+	    	case REGULAR: return new RegularMenuView(app);
 	        case RECEIPT_REGISTER: return new ReceiptRegisterView(app, (RegularController) baseController);
 	        case RECEIPT_SEARCH: return new ReceiptSearchView(app, (RegularController) baseController);
 	        case RECEIPT_UPDATE: return new ReceiptUpdateView();
