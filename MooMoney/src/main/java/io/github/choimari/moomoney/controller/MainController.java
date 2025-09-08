@@ -13,11 +13,13 @@ public class MainController extends BaseController{
 	// 주입 받음
     private final ViewAbstractFactory guestFactory;
     private final GuestController guestController;
+    private boolean exitRequested;// 종료 요청 플래그
     
     public MainController(InputReader reader, ViewAbstractFactory guestFactory, GuestController guestController) {
 		super(reader);
 		this.guestFactory = guestFactory;
 		this.guestController = guestController;
+		exitRequested = false;
     }
 
 	public void run() {
@@ -38,6 +40,7 @@ public class MainController extends BaseController{
         		System.out.println("===============================");
         		System.out.println("다음에 다시 만나요 🐈‍⬛");
         		running = false;
+        		exitRequested = true; // 종료 요청
         		break;
         	default : 
         		System.out.println("===============================");
@@ -48,6 +51,10 @@ public class MainController extends BaseController{
 	
 	public String input() {
 		return reader.readLine("입력 : ");
+	}
+	
+	public boolean getExitRequested() {
+	    return exitRequested;
 	}
 	
 }

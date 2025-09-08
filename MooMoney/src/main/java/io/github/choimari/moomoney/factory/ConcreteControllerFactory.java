@@ -54,7 +54,7 @@ public class ConcreteControllerFactory  implements ControllerAbstractFactory {
      */
     @Override
     public RegularController createRegularController() {
-        return new RegularController(reader);
+        return new RegularController(reader, app, viewFactory);
     }
 
     /**
