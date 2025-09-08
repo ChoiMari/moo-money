@@ -44,12 +44,19 @@ public class GuestController extends BaseController{
         	guestView.show(); // 비 로그인 시 메뉴화면 출력
             String choice = input("입력 : ");
             switch(choice) {
-                case "1": loginView.show(); break; // 로그인 선택
+                case "1": 
+                	loginView.show(); 
+                	//로그인 성공 시 Guest 메뉴 빠져나가기
+                    if (app.getCurrentUser() != null) {
+                        running = false; // 루프 종료
+                    }
+                	break; // 로그인 선택
                 case "2": signupView.show(); break; // 회원가입 선택
                 case "3": running = false; break; // 이전 메뉴
                 default: System.out.println("[입력 오류] : 다시 입력해 주세요.");
             }
-        }  
+        }
+        
 	}
 	
 	/**
@@ -62,19 +69,19 @@ public class GuestController extends BaseController{
 	
 	/**
 	 * 로그인 처리 메서드
-	 * @return User 객체 (로그인 성공) / null (로그인 실패)
+	 * @return true (로그인 성공) / false (로그인 실패)
 	 */
-	public User login(LoginRequest dto) {
+	public boolean login(LoginRequest dto) {
 		try {
 			User user = loginSvc.login(dto);
 		    if (user != null) {
 		        app.setCurrentUser(user); // 🌟 로그인 성공 → App에 상태 전달
 		    }
-			return  user; //-> 로그인 실패 시 이것도 null
+			return true;
 		} catch (IOException e) {
 			System.out.println("[ERROR] 로그인 실패: " + e.getMessage());
 			e.printStackTrace();
-			return null;
+			return false;
 		}	
 	}
 	
@@ -166,6 +173,10 @@ public class GuestController extends BaseController{
 	    }
 
 	    return valid;
+	}
+
+	public App getApp() {
+		return app;
 	}
 	
 }

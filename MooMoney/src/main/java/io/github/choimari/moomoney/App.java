@@ -5,6 +5,7 @@ import io.github.choimari.moomoney.controller.BaseController;
 import io.github.choimari.moomoney.controller.GuestController;
 import io.github.choimari.moomoney.controller.MainController;
 import io.github.choimari.moomoney.controller.PremiumController;
+import io.github.choimari.moomoney.controller.RegularController;
 import io.github.choimari.moomoney.domain.User;
 import io.github.choimari.moomoney.factory.GuestViewFactory;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
@@ -54,7 +55,25 @@ public class App {
     }
     
     public void run() {
-        mainController.run();
+       // mainController.run();
+        boolean running = true;
+        while (running) {
+            if (currentUser == null) { // 로그아웃 상태
+            	mainController.run(); // 메인메뉴
+                //guestController.run(); // 로그인/회원가입 처리
+            } else {
+                // 로그인 성공 후 권한별 컨트롤러 호출
+                switch (currentUser.getRole()) {
+                    case REGULAR_MEMBER : new RegularController(reader).run(); 
+                    	break;
+                    case PREMIUM_MEMBER : new PremiumController(reader).run();
+                    	break;
+                    case ADMIN : new AdminController(reader).run();
+                    	break;
+                    default : System.out.println("[ERROR] 알 수 없는 권한입니다.");
+                }
+            }
+        }
     }
     
 	public static void main(String[] args) {
