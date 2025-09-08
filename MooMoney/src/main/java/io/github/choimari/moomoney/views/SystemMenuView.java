@@ -6,10 +6,19 @@ import io.github.choimari.moomoney.util.InputReader;
 public class SystemMenuView extends AbstractView{
 
 	@Override
+    protected void printHeader() {
+        System.out.println("============================================");
+    }
+
+	@Override
 	protected void showContent() {
-		// TODO Auto-generated method stub
+		
 		
 	}
+	@Override
+    protected void printFooter() {
+        System.out.println("============================================");
+    }
 
 
 }
