@@ -42,6 +42,7 @@ public class ReceiptRegisterView extends AbstractView{
         receiptInfo.put("price", regularController.input("💸금액 입력 : "));
         System.out.println();
         receiptInfo.put("memo", regularController.input("📝메모 : "));
+        System.out.println("\n============================================");
         boolean success = regularController.registerReceipt(receiptInfo);// 컨트롤러에서 유효성 검사 후 등록처리함
         // 결과 안내
         if(success) {
