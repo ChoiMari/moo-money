@@ -10,7 +10,7 @@ public class PremiumController extends BaseController{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		System.out.println("프리미엄나오니??");
 		
 	}
 

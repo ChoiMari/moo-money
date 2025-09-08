@@ -23,7 +23,7 @@ public class SignupView extends AbstractView{
 	@Override
 	protected void printHeader() {
 		System.out.println("============================================");
-		System.out.printf(ConsoleStyle.apply("\n<🤗 %s>", ConsoleStyle.PASTEL_PINK),ViewType.SIGNUP.getType());
+		System.out.printf(ConsoleStyle.apply("<🤗 %s>", ConsoleStyle.PASTEL_PINK),ViewType.SIGNUP.getType());
 	}
 	
 	@Override

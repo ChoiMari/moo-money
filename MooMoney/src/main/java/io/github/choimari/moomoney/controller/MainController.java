@@ -30,6 +30,9 @@ public class MainController extends BaseController{
         	switch(choice) {
         	case "1" : 
 	            guestController.run(); 
+	            if(guestController.getApp().getCurrentUser() != null) {
+	                running = false;
+	            }
 	            break;
         	case "2" :
         		System.out.println("===============================");

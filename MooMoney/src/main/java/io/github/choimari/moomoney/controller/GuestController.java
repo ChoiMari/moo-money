@@ -3,7 +3,9 @@ package io.github.choimari.moomoney.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import io.github.choimari.moomoney.App;
 import io.github.choimari.moomoney.domain.Role;
+import io.github.choimari.moomoney.domain.User;
 import io.github.choimari.moomoney.dto.LoginRequest;
 import io.github.choimari.moomoney.dto.SignUpRequest;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
@@ -20,12 +22,15 @@ public class GuestController extends BaseController{
 	private final ViewAbstractFactory guestFactory;
 	private final LoginService loginSvc;
 	private final SignUpService signUpSvc;
+	private final App app;
 	
-	public GuestController(InputReader reader, ViewAbstractFactory guestFactory, LoginService loginSvc, SignUpService signUpSvc) {
+	public GuestController(InputReader reader, ViewAbstractFactory guestFactory, LoginService loginSvc, SignUpService signUpSvc,
+			App app) {
 		super(reader);
 		this.guestFactory = guestFactory;
 		this.signUpSvc = signUpSvc;
 		this.loginSvc = loginSvc;
+		this.app = app;
 	}
 
 	@Override
@@ -39,12 +44,19 @@ public class GuestController extends BaseController{
         	guestView.show(); // 비 로그인 시 메뉴화면 출력
             String choice = input("입력 : ");
             switch(choice) {
-                case "1": loginView.show(); break; // 로그인 선택
+                case "1": 
+                	loginView.show(); 
+                	//로그인 성공 시 Guest 메뉴 빠져나가기
+                    if (app.getCurrentUser() != null) {
+                        running = false; // 루프 종료
+                    }
+                	break; // 로그인 선택
                 case "2": signupView.show(); break; // 회원가입 선택
                 case "3": running = false; break; // 이전 메뉴
                 default: System.out.println("[입력 오류] : 다시 입력해 주세요.");
             }
-        }  
+        }
+        
 	}
 	
 	/**
@@ -56,11 +68,21 @@ public class GuestController extends BaseController{
 	}
 	
 	/**
-	 * 로그인
-	 * @return 결과
+	 * 로그인 처리 메서드
+	 * @return true (로그인 성공) / false (로그인 실패)
 	 */
 	public boolean login(LoginRequest dto) {
-		return false;
+		try {
+			User user = loginSvc.login(dto);
+		    if (user != null) {
+		        app.setCurrentUser(user); // 🌟 로그인 성공 → App에 상태 전달
+		    }
+			return true;
+		} catch (IOException e) {
+			System.out.println("[ERROR] 로그인 실패: " + e.getMessage());
+			e.printStackTrace();
+			return false;
+		}	
 	}
 	
 	/**
@@ -152,4 +174,9 @@ public class GuestController extends BaseController{
 
 	    return valid;
 	}
+
+	public App getApp() {
+		return app;
+	}
+	
 }
