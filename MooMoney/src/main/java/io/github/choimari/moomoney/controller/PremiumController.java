@@ -1,15 +1,10 @@
 package io.github.choimari.moomoney.controller;
 
-import java.time.YearMonth;
-import java.util.List;
-
 import io.github.choimari.moomoney.App;
-import io.github.choimari.moomoney.domain.Category;
-import io.github.choimari.moomoney.dto.ReceiptRequest;
-import io.github.choimari.moomoney.factory.PremiumViewFactory;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.factory.ViewType;
 import io.github.choimari.moomoney.service.ReceiptService;
+import io.github.choimari.moomoney.service.ReportService;
 import io.github.choimari.moomoney.util.InputReader;
 import io.github.choimari.moomoney.views.View;
 
@@ -19,15 +14,18 @@ public class PremiumController extends BaseController{
 	 private final ReceiptService receiptSvc;
 	 private final ViewAbstractFactory premiumViewFactory;
 	 private final RegularController regularController;
+	 private final ReportService reportSvc; // 보고서 서비스
 	 
 	 public PremiumController(InputReader reader, App app, ViewAbstractFactory regularViewFactory, ReceiptService receiptSvc,
-			 ViewAbstractFactory premiumViewFactory, RegularController regularController) {
+			 ViewAbstractFactory premiumViewFactory, RegularController regularController,
+			 ReportService reportSvc) {
 	        super(reader);
 	        this.app = app;
 	        this.regularViewFactory = regularViewFactory;
 	        this.receiptSvc = receiptSvc;
 	        this.premiumViewFactory = premiumViewFactory;
 	        this.regularController = regularController;
+	        this.reportSvc = reportSvc;
 	}
 	@Override
 	public void run() {
@@ -72,7 +70,76 @@ public class PremiumController extends BaseController{
 		return reader.readLine(prompt);
 	}
 	
-
 	
+	/**
+	 * 연월보고서
+	 */
+	public void showMonthlyReport() {
+	    String email = app.getCurrentUser().getEmail(); // 로그인 사용자 이메일
+	    String yearMonth;
+
+	    // 1. 연월 입력 + 검증
+	    while (true) {
+	        yearMonth = input("조회할 연월 입력 (예: 2025-09) : ").trim();
+
+	        // yyyy-MM 형식 체크
+	        if (!yearMonth.matches("\\d{4}-(0[1-9]|1[0-2])")) {
+	            System.out.println("[입력 오류] 형식이 올바르지 않습니다. 예: 2025-09");
+	            continue;
+	        }
+
+	        // 존재하는 달인지 확인
+	        try {
+	            java.time.YearMonth.parse(yearMonth, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM"));
+	        } catch (Exception e) {
+	            System.out.println("[입력 오류] 존재하지 않는 연월입니다.");
+	            continue;
+	        }
+
+	        break; // 올바른 입력이면 반복 종료
+	    }
+
+	    // 2. 서비스 호출 → 화면 출력 + 파일 자동 저장
+	    try {
+	        reportSvc.showMonthlyReport(email, yearMonth);
+	    } catch (Exception e) {
+	        System.out.println("[ERROR] 월별 보고서 처리 실패: " + e.getMessage());
+	    }
+	}
+
+	/**
+	 * 카테고리별 보고서
+	 */
+	public void showCategoryReport() {
+	    String email = app.getCurrentUser().getEmail(); // 로그인 사용자 이메일
+	    String yearMonth;
+
+	    // 연월 입력 + 검증
+	    while (true) {
+	        yearMonth = input("조회할 연월 입력 (예: 2025-09) : ").trim();
+	        System.out.println();
+	        if (!yearMonth.matches("\\d{4}-(0[1-9]|1[0-2])")) {
+	            System.out.println("날짜 형식이 올바르지 않습니다. 예: 2025-09");
+	            continue;
+	        }
+
+	        try {
+	            java.time.YearMonth.parse(yearMonth, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM"));
+	        } catch (Exception e) {
+	            System.out.println("[입력 오류] 존재하지 않는 연월입니다.");
+	            continue;
+	        }
+
+	        break;
+	    }
+
+	    // 서비스 호출
+	    try {
+	        reportSvc.showCategoryReport(email, yearMonth);
+	    } catch (Exception e) {
+	        System.out.println("[ERROR] 카테고리별 보고서 처리 실패: " + e.getMessage());
+	    }
+	}
+
 
 }
