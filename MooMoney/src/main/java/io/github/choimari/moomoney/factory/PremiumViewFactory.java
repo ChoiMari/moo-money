@@ -2,6 +2,7 @@ package io.github.choimari.moomoney.factory;
 
 import io.github.choimari.moomoney.App;
 import io.github.choimari.moomoney.controller.BaseController;
+import io.github.choimari.moomoney.controller.PremiumController;
 import io.github.choimari.moomoney.views.PremiumMenuView;
 import io.github.choimari.moomoney.views.ReportView;
 import io.github.choimari.moomoney.views.View;
@@ -19,7 +20,7 @@ public class PremiumViewFactory extends ViewAbstractFactory{
 	public View createView(ViewType viewType, BaseController baseController) {
         switch(viewType) {
 	    	case PREMIUM: return new PremiumMenuView(app);
-	        case REPORT: return new ReportView();
+	        case REPORT: return new ReportView((PremiumController)baseController);
 	        default: return null;
         }
 	}
