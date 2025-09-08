@@ -59,7 +59,7 @@ public class MainView extends AbstractView {
 	    System.out.println("===================================================================================");
 	    System.out.println("<Main 화면>\n");
 	    System.out.println(ConsoleStyle.apply(" 한눈에 지출 ", ConsoleStyle.GREEN,ConsoleStyle.BOLD));
-	    System.out.println(ConsoleStyle.apply("\n[1] 시작하기", ConsoleStyle.BOLD,ConsoleStyle.BG_YELLOW) + ConsoleStyle.apply(" [2] 프로그램 종료", ConsoleStyle.MEDIUM_GREY));
+	    System.out.println(ConsoleStyle.apply("\n[1] 시작하기", ConsoleStyle.BOLD,ConsoleStyle.YELLOW) + ConsoleStyle.apply(" [2] 프로그램 종료", ConsoleStyle.MEDIUM_GREY));
 	    System.out.println("\n원하시는 메뉴를 선택해주세요.");
 	}
 	

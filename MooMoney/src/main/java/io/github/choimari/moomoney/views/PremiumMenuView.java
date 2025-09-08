@@ -23,7 +23,7 @@ public class PremiumMenuView extends AbstractView{
 
 	@Override
 	protected void showContent() {
-        System.out.println("\n[1] 영수증 등록\n[2] 영수증 조회\n[3]보고서 출력\n[4] 로그아웃\n");
+        System.out.println("\n[1] 영수증 등록\n[2] 영수증 조회\n[3] 보고서 출력\n[4] 로그아웃\n");
         System.out.println("원하시는 메뉴를 선택 해주세요.");
 	}
 	@Override
