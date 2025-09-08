@@ -1,6 +1,11 @@
 package io.github.choimari.moomoney.controller;
 
+import java.time.YearMonth;
+import java.util.List;
+
 import io.github.choimari.moomoney.App;
+import io.github.choimari.moomoney.domain.Category;
+import io.github.choimari.moomoney.dto.ReceiptRequest;
 import io.github.choimari.moomoney.factory.PremiumViewFactory;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
 import io.github.choimari.moomoney.factory.ViewType;
@@ -28,6 +33,9 @@ public class PremiumController extends BaseController{
 	public void run() {
 		boolean running = true;
         View menu = premiumViewFactory.createView(ViewType.PREMIUM, this);
+        View register = regularViewFactory.createView(ViewType.RECEIPT_REGISTER, regularController);
+        View search = regularViewFactory.createView(ViewType.RECEIPT_SEARCH, regularController);
+        View report = premiumViewFactory.createView(ViewType.REPORT, this);
         menu.show();
         
         while (running) {
@@ -36,13 +44,13 @@ public class PremiumController extends BaseController{
 
             switch (choice) {
                 case "1": // 영수증 등록
-                    regularViewFactory.createView(ViewType.RECEIPT_REGISTER, regularController).show();
+                	register.show();
                     break;
                 case "2": // 전체 조회
-                    regularViewFactory.createView(ViewType.RECEIPT_SEARCH, regularController).show();
+                	search.show();
                     break;
                 case "3": // 보고서 출력 (프리미엄 전용)
-                    //handleReportMenu();
+                	report.show();
                     break;
                 case "4": // 로그아웃
                     System.out.println("로그아웃 하였습니다.🖐🏻");
@@ -63,5 +71,8 @@ public class PremiumController extends BaseController{
 	public String input(String prompt) {
 		return reader.readLine(prompt);
 	}
+	
+
+	
 
 }
