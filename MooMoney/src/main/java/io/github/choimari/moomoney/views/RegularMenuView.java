@@ -10,12 +10,11 @@ import io.github.choimari.moomoney.util.InputReader;
 
 public class RegularMenuView extends AbstractView{
 	private final App app;// 현재 접속 유저 정보 담은 객체
-	private final RegularController regularController;
+
 	
     // 생성자에서 User 전달
-    public RegularMenuView(App app, RegularController regularController) {
+    public RegularMenuView(App app) {
         this.app = app;
-        this.regularController = regularController;
     }
     
 	@Override
