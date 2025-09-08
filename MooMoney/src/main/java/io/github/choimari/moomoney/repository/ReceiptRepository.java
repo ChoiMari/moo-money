@@ -4,10 +4,19 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.opencsv.CSVWriter;
 
+import io.github.choimari.moomoney.domain.Category;
 import io.github.choimari.moomoney.dto.ReceiptRequest;
 
 /**
@@ -16,6 +25,7 @@ import io.github.choimari.moomoney.dto.ReceiptRequest;
  * 영수증 데이터를 월별로 CSV / TXT 파일로 저장
  */
 public class ReceiptRepository {
+	  private final String basePath = "data/receipts"; // 최상위 폴더
 
     /**
      * 영수증 저장
@@ -79,6 +89,76 @@ public class ReceiptRepository {
                     dto.getPrice(),           // 금액
                     dto.getMemo()));          // 메모
         }
+    }
+    
+    /**
+     * TXT에서 모든 사용자의 레코드를 읽어 특정 이메일 필터링
+     */
+    public List<ReceiptRequest> findAllByUser(String userEmail) throws IOException {
+        List<ReceiptRequest> result = new ArrayList<>();
+        Path base = Paths.get(basePath);
+        if (!Files.exists(base)) return result;
+
+        // depth 2: receipts/YYYY-MM/receipts.txt
+        try (Stream<Path> stream = Files.walk(base, 2)) {
+            stream.filter(path -> path.getFileName().toString().equals("receipts.txt"))
+                  .forEach(txtPath -> {
+                      try {
+                          List<String> lines = Files.readAllLines(txtPath);
+                          for (String line : lines) {
+                              line = line.trim();
+                              if (line.isEmpty()) continue;
+
+                              // TXT 포맷: "이메일: xx | 날짜: yyyy-MM-dd | 카테고리: xx | 금액: xx | 메모: xx"
+                              String[] parts = line.split("\\|");
+                              if (parts.length < 5) continue;
+
+                              String email = parts[0].split(":")[1].trim();
+                              if (!email.equals(userEmail)) continue;
+
+                              LocalDate date = LocalDate.parse(parts[1].split(":")[1].trim());
+                              Category category = Category.valueOf(parts[2].split(":")[1].trim());
+                              int price = Integer.parseInt(parts[3].split(":")[1].trim());
+                              String memo = parts[4].split(":")[1].trim();
+
+                              result.add(new ReceiptRequest(date, category, price, memo));
+                          }
+                      } catch (IOException e) {
+                          e.printStackTrace();
+                      }
+                  });
+        }
+
+        // 최신순 정렬
+        result.sort(Comparator.comparing(ReceiptRequest::getDate).reversed());
+        return result;
+    }
+
+    /**
+     * 카테고리별 조회
+     */
+    public List<ReceiptRequest> findByCategory(String userEmail, Category category) throws IOException {
+        return findAllByUser(userEmail).stream()
+                .filter(r -> r.getCategory() == category)
+                .toList();
+    }
+
+    /**
+     * 년월별 조회 (yyyy-MM 기준)
+     */
+    public List<ReceiptRequest> findByMonth(String userEmail, String yearMonth) throws IOException {
+        return findAllByUser(userEmail).stream()
+                .filter(r -> r.getDate().toString().startsWith(yearMonth)) // 2025-09 등 비교
+                .toList();
+    }
+
+    /**
+     * 년월 + 카테고리 동시 조회
+     */
+    public List<ReceiptRequest> findByMonthAndCategory(String userEmail, String yearMonth, Category category) throws IOException {
+        return findAllByUser(userEmail).stream()
+                .filter(r -> r.getDate().toString().startsWith(yearMonth) && r.getCategory() == category)
+                .toList();
     }
 
 }
