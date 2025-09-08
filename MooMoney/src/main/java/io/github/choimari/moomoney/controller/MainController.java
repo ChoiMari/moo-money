@@ -38,7 +38,7 @@ public class MainController extends BaseController{
 	            break;
         	case "2" :
         		System.out.println("===============================");
-        		System.out.println("다음에 다시 만나요 🐈‍⬛");
+        		System.out.println("다음에 다시 만나요 ");
         		running = false;
         		exitRequested = true; // 종료 요청
         		break;

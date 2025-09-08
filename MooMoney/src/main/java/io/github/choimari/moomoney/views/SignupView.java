@@ -23,7 +23,7 @@ public class SignupView extends AbstractView{
 	@Override
 	protected void printHeader() {
 		System.out.println("============================================");
-		System.out.printf(ConsoleStyle.apply("<🤗 %s>", ConsoleStyle.PASTEL_PINK),ViewType.SIGNUP.getType());
+		System.out.printf(ConsoleStyle.apply("<%s>", ConsoleStyle.PASTEL_PINK),ViewType.SIGNUP.getType());
 	}
 	
 	@Override
@@ -48,11 +48,11 @@ public class SignupView extends AbstractView{
 		     	System.out.println("[아무 키] 계속 진행, [0] 취소(이전 단계로 이동)");
 		     	String choice = guestController.input("입력 : ");
 		     	 if ("0".equals(choice)) {
-		                System.out.println(ConsoleStyle.apply("❌ 회원가입을 취소하고 이전 단계로 돌아갑니다.", ConsoleStyle.MEDIUM_GREY));
+		                System.out.println(ConsoleStyle.apply("회원가입을 취소하고 이전 단계로 돌아갑니다.", ConsoleStyle.MEDIUM_GREY));
 		                return; // showContent 종료 → 이전 메뉴로 복귀
 		            } 
 		 	}		 }
-		System.out.println(ConsoleStyle.apply("회원가입 완료 🎉", ConsoleStyle.BOLD, ConsoleStyle.BLUE));
+		System.out.println(ConsoleStyle.apply("회원가입 완료 ", ConsoleStyle.BOLD, ConsoleStyle.BLUE));
 	}
 
 	@Override

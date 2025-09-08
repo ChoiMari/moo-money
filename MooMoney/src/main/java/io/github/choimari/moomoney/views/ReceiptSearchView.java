@@ -30,7 +30,7 @@ public class ReceiptSearchView extends AbstractView{
 	@Override
     protected void printHeader() {
         System.out.println("============================================");
-        System.out.printf(ConsoleStyle.apply("<🧾 %s >\n\n", ConsoleStyle.BLUE), ViewType.RECEIPT_SEARCH.getType());
+        System.out.printf(ConsoleStyle.apply("< %s >\n\n", ConsoleStyle.BLUE), ViewType.RECEIPT_SEARCH.getType());
     }
 	
 	@Override

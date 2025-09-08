@@ -22,12 +22,12 @@ public class ReportView extends AbstractView{
 	@Override
     protected void printHeader() {
 		System.out.println("============================================");
-		System.out.println(ConsoleStyle.apply("\n<✨보고서 출력>", ConsoleStyle.YELLOW));
+		System.out.println(ConsoleStyle.apply("\n<보고서 출력>", ConsoleStyle.YELLOW));
     }
 
 	@Override
 	protected void showContent() {
-        System.out.println("\n[1] 📊 월별 전체 보고서 \n[2] 🍕🚌월별 카테고리별 보고서🎬\n[3] 🔙이전 메뉴\n");
+        System.out.println("\n[1] 월별 전체 보고서 \n[2] 월별 카테고리별 보고서\n[3] 이전 메뉴\n");
         System.out.println("원하시는 메뉴를 선택 해주세요.");
         System.out.println("============================================");
         String choice = premiumController.input("선택 : ");

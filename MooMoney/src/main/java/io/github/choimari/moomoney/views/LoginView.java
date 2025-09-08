@@ -15,7 +15,7 @@ public class LoginView extends AbstractView{
 	@Override
     protected void printHeader() {
     	System.out.println("============================================");
-        System.out.printf(ConsoleStyle.apply("<🔐 %s>\n\n", ConsoleStyle.BLUE), ViewType.LOGIN.getType());
+        System.out.printf(ConsoleStyle.apply("< %s>\n\n", ConsoleStyle.BLUE), ViewType.LOGIN.getType());
     }
 	
 	@Override
@@ -26,7 +26,7 @@ public class LoginView extends AbstractView{
 	    // 원래 Map으로 받을까 하다가.. dto..일이 점점 커진다.. 이건 그냥 작은 콘솔 프로그램인데..
 	    LoginRequest loginRequest = new LoginRequest(id, password);
 	    if(guestController.login(loginRequest)) {
-	    	System.out.println(ConsoleStyle.apply("\n🌼로그인에 성공했습니다🌼", ConsoleStyle.GREEN));
+	    	System.out.println(ConsoleStyle.apply("\n로그인에 성공했습니다", ConsoleStyle.GREEN));
         } else {
             System.out.println(ConsoleStyle.apply("\n[로그인 실패] 이메일 또는 비밀번호가 일치하지 않습니다.", ConsoleStyle.ITALIC));
         }
