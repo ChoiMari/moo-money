@@ -74,7 +74,7 @@ public class ReportService {
         sb.append(String.format("\n%-10s요청 계정 : %s\n\n", "", email));
         sb.append(String.format("%-15s-😸한눈에 지출-\n", "", email));
         // 콘솔 출력
-        System.out.println(ConsoleStyle.apply("\n" + sb.toString(), ConsoleStyle.GREEN));
+        System.out.println(ConsoleStyle.apply("\n" + sb.toString(), ConsoleStyle.BLACK));
 
         // 자동 저장
         String filename = String.format("%s-%s-월별보고서.txt", email, yearMonthStr);
@@ -106,23 +106,31 @@ public class ReportService {
         int totalSum = monthlyReceipts.stream().mapToInt(ReceiptRequest::getPrice).sum();
 
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("===== %s 카테고리별 지출 보고서 (%s) =====\n", yearMonthStr, email));
+        sb.append("==========================================================\n");
+        sb.append(String.format("   📊 %s 카테고리별 지출 보고서 (%s) 📊\n", yearMonthStr, email));
+        sb.append("==========================================================\n\n");
 
         for (var entry : categoryMap.entrySet()) {
-            sb.append(String.format("카테고리: %s\n", entry.getKey().name()));
+            Category category = entry.getKey();
+            List<ReceiptRequest> list = entry.getValue();
+            int sum = list.stream().mapToInt(ReceiptRequest::getPrice).sum();
+
+            sb.append(String.format("[카테고리: %s]\n", category.getLabel()));
             sb.append("-------------------------------------------------------\n");
-            sb.append(String.format("%-12s %-10s %-20s\n", "날짜", "금액", "메모"));
-            int categorySum = 0;
-            for (ReceiptRequest r : entry.getValue()) {
-                sb.append(String.format("%-12s %-10s %-20s\n",
+            sb.append(String.format("%-12s | %-14s | %-20s\n", "날짜", "금액", "메모"));
+            sb.append("-------------------------------------------------------\n");
+
+            for (ReceiptRequest r : list) {
+                sb.append(String.format("%-14s | %15s | %-20s\n",
                         r.getDate(),
                         String.format("%,d원", r.getPrice()),
                         r.getMemo()));
-                categorySum += r.getPrice();
             }
-            sb.append(String.format("합계: %,d원\n\n", categorySum));
+
+            sb.append("-------------------------------------------------------\n");
+            sb.append(String.format("소계 합계      : %,d원\n\n", sum));
+            sb.append(String.format("%-15s-😸한눈에 지출-\n", "", email));
         }
-        sb.append("총 합계: ").append(String.format("%,d원\n", totalSum));
 
         // 콘솔 출력
         System.out.println(sb);
