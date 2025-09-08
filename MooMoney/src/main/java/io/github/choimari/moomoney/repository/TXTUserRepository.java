@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import io.github.choimari.moomoney.domain.Role;
 import io.github.choimari.moomoney.domain.User;
 
 /**
@@ -82,5 +83,31 @@ public class TXTUserRepository implements IUserRepository{
                       user.getNickname());//[4]
         }
     }
-	
+    
+    /**
+     * 로그인 시 사용
+     * @param email 로그인 시도 email
+     * @return User객체
+     * @throws IOException
+     */
+    public User findByEmail(String email) throws IOException {
+        try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line = "";
+            while((line = br.readLine()) != null) {
+                String[] tokens = line.split(",");
+                if(tokens[0].equals(email)) { 
+                    // 파일에서 읽어 User 객체로 변환
+                    User user = User.builder()
+                        .email(tokens[0])
+                        .passwordSalt(tokens[1])
+                        .passwordHash(tokens[2])
+                        .role(Role.valueOf(tokens[3])) //valueOf : 파일에 저장된 문자열을 enum 타입으로 바꾸는 메서드
+                        .nickname(tokens[4])
+                        .build();
+                    return user;
+                }
+            }
+        }
+        return null; // 이메일 없음
+       }
 }

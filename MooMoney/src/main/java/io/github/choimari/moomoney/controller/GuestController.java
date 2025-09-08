@@ -3,7 +3,9 @@ package io.github.choimari.moomoney.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import io.github.choimari.moomoney.App;
 import io.github.choimari.moomoney.domain.Role;
+import io.github.choimari.moomoney.domain.User;
 import io.github.choimari.moomoney.dto.LoginRequest;
 import io.github.choimari.moomoney.dto.SignUpRequest;
 import io.github.choimari.moomoney.factory.ViewAbstractFactory;
@@ -20,12 +22,15 @@ public class GuestController extends BaseController{
 	private final ViewAbstractFactory guestFactory;
 	private final LoginService loginSvc;
 	private final SignUpService signUpSvc;
+	private final App app;
 	
-	public GuestController(InputReader reader, ViewAbstractFactory guestFactory, LoginService loginSvc, SignUpService signUpSvc) {
+	public GuestController(InputReader reader, ViewAbstractFactory guestFactory, LoginService loginSvc, SignUpService signUpSvc,
+			App app) {
 		super(reader);
 		this.guestFactory = guestFactory;
 		this.signUpSvc = signUpSvc;
 		this.loginSvc = loginSvc;
+		this.app = app;
 	}
 
 	@Override
@@ -56,11 +61,21 @@ public class GuestController extends BaseController{
 	}
 	
 	/**
-	 * 로그인
-	 * @return 결과
+	 * 로그인 처리 메서드
+	 * @return User 객체 (로그인 성공) / null (로그인 실패)
 	 */
-	public boolean login(LoginRequest dto) {
-		return false;
+	public User login(LoginRequest dto) {
+		try {
+			User user = loginSvc.login(dto);
+		    if (user != null) {
+		        app.setCurrentUser(user); // 🌟 로그인 성공 → App에 상태 전달
+		    }
+			return  user; //-> 로그인 실패 시 이것도 null
+		} catch (IOException e) {
+			System.out.println("[ERROR] 로그인 실패: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}	
 	}
 	
 	/**
@@ -152,4 +167,5 @@ public class GuestController extends BaseController{
 
 	    return valid;
 	}
+	
 }
