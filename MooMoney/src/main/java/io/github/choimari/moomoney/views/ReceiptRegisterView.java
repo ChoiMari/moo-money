@@ -26,10 +26,15 @@ public class ReceiptRegisterView extends AbstractView{
     
 	@Override
     protected void printHeader() {
-		Map<String,String> receiptInfo = new HashMap<>();
         System.out.println("============================================");
         System.out.printf(ConsoleStyle.apply("<🧾 %s >\n\n", ConsoleStyle.BLUE), ViewType.RECEIPT_REGISTER.getType());
-        receiptInfo.put("date",regularController.input("날짜 입력 (예)2025-09-09 : "));
+    }
+
+	@Override
+	protected void showContent() {
+		Map<String,String> receiptInfo = new HashMap<>();
+		System.out.println("🧾영수증으로 지출 관리하기🧾");
+		receiptInfo.put("date",regularController.input("날짜 입력 (예)2025-09-09 : "));
         System.out.println();
         System.out.println("===👛 지출 카테고리===");
         Category[] categories = Category.values();
@@ -50,16 +55,10 @@ public class ReceiptRegisterView extends AbstractView{
         } else {
             System.out.println(ConsoleStyle.apply("\n영수증 등록 실패 ❌\n", ConsoleStyle.RED));
         }
-    }
-
-	@Override
-	protected void showContent() {
-		
-		
 	}
 	@Override
     protected void printFooter() {
-        System.out.println("============================================");
+        //System.out.println("============================================");
     }
 
 }
