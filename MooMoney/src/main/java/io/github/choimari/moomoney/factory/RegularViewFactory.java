@@ -26,7 +26,7 @@ public class RegularViewFactory extends ViewAbstractFactory{
 	public View createView(ViewType viewType, BaseController baseController) {
         switch(viewType) {
 	    	case REGULAR: return new RegularMenuView(app, (RegularController) baseController);
-	        case RECEIPT_REGISTER: return new ReceiptRegisterView();
+	        case RECEIPT_REGISTER: return new ReceiptRegisterView(app, (RegularController) baseController);
 	        case RECEIPT_SEARCH: return new ReceiptSearchView();
 	        case RECEIPT_UPDATE: return new ReceiptUpdateView();
 	        case RECEIPT_DELETE: return new ReceiptDeleteView();
