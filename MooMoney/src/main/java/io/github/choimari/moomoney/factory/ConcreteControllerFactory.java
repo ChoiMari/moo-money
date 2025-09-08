@@ -5,7 +5,9 @@ import io.github.choimari.moomoney.controller.AdminController;
 import io.github.choimari.moomoney.controller.GuestController;
 import io.github.choimari.moomoney.controller.PremiumController;
 import io.github.choimari.moomoney.controller.RegularController;
+import io.github.choimari.moomoney.repository.ReceiptRepository;
 import io.github.choimari.moomoney.service.LoginService;
+import io.github.choimari.moomoney.service.ReceiptService;
 import io.github.choimari.moomoney.service.SignUpService;
 import io.github.choimari.moomoney.util.InputReader;
 
@@ -22,6 +24,7 @@ public class ConcreteControllerFactory  implements ControllerAbstractFactory {
     private final App app;
     private final LoginService loginSvc; // 로그인 처리 서비스
     private final SignUpService signUpSvc; // 회원가입 처리 서비스
+    private final ReceiptService receiptSvc;
 
     /**
      * 생성자 주입(Constructor DI)
@@ -31,12 +34,14 @@ public class ConcreteControllerFactory  implements ControllerAbstractFactory {
             SignUpService signUpSvc,
             InputReader reader,
             ViewAbstractFactory viewFactory,
-            App app) {
+            App app,
+            ReceiptService receiptSvc) {
         this.reader = reader;
         this.viewFactory = viewFactory;
         this.app = app;
         this.loginSvc = loginSvc;
         this.signUpSvc = signUpSvc;
+        this.receiptSvc = receiptSvc;
     }
 
     /**
@@ -54,7 +59,7 @@ public class ConcreteControllerFactory  implements ControllerAbstractFactory {
      */
     @Override
     public RegularController createRegularController() {
-        return new RegularController(reader, app, viewFactory);
+        return new RegularController(reader, app, viewFactory, receiptSvc);
     }
 
     /**

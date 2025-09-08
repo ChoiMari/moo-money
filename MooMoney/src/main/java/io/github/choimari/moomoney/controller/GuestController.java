@@ -76,8 +76,10 @@ public class GuestController extends BaseController{
 			User user = loginSvc.login(dto);
 		    if (user != null) {
 		        app.setCurrentUser(user); // 🌟 로그인 성공 → App에 상태 전달
+		        return true;
 		    }
-			return true;
+		    return false;
+			
 		} catch (IOException e) {
 			System.out.println("[ERROR] 로그인 실패: " + e.getMessage());
 			e.printStackTrace();
