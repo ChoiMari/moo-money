@@ -46,7 +46,7 @@ public class RegularController extends BaseController {
                 	searchView.show();// 영수증 조회 로직
                     break;
                 case "3":
-                	System.out.println(ConsoleStyle.apply("\n로그아웃 하였습니다.🖐🏻", ConsoleStyle.PURPLE));
+                	System.out.println(ConsoleStyle.apply("\n로그아웃 하였습니다.", ConsoleStyle.PURPLE));
                     app.setCurrentUser(null); // 로그아웃
                     running = false;
                     break;

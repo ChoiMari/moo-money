@@ -20,7 +20,7 @@ public class RegularMenuView extends AbstractView{
 	@Override
     protected void printHeader() {
         System.out.println("============================================");
-        System.out.printf(ConsoleStyle.apply("<😽 접속자 : "+ app.getCurrentUser().getNickname() + ">\n", ConsoleStyle.YELLOW));
+        System.out.printf(ConsoleStyle.apply("< 접속자 : "+ app.getCurrentUser().getNickname() + ">\n", ConsoleStyle.YELLOW));
         System.out.println("\n[1] 영수증 등록\n[2] 영수증 조회\n[3] 로그아웃\n");
         System.out.println("원하시는 메뉴를 입력해주세요.");
     }

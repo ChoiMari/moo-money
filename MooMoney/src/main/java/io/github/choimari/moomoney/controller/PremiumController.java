@@ -51,7 +51,7 @@ public class PremiumController extends BaseController{
                 	report.show();
                     break;
                 case "4": // 로그아웃
-                    System.out.println("로그아웃 하였습니다.🖐🏻");
+                    System.out.println("로그아웃 하였습니다.");
                     app.setCurrentUser(null);
                     running = false;
                     break;
