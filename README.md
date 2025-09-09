@@ -31,7 +31,7 @@
   - 보조 스트림(`BufferedReader` / `BufferedWriter`)
 
 ## 🐰 Use Case
-![usercase](./docs/한눈에지출-UseCase.png)
+![usercase](./docs/usecase.png)
 
 ## 📁 폴더 구조
 ```
