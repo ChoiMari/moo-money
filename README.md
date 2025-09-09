@@ -105,5 +105,4 @@ java -jar moo-money-1.0.0.jar #실행
 ![ppt](./docs/ppt/ppt6.png)
 ![ppt](./docs/ppt/ppt7.png)
 ![ppt](./docs/ppt/ppt8.png)
-![ppt](./docs/ppt/ppt9.png)
 ![ppt](./docs/ppt/ppt10.png)
