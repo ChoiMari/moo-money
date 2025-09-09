@@ -96,3 +96,14 @@ java -jar moo-money-1.0.0.jar #실행
 ### ⭐보고서는 단순히 콘솔에만 출력하는 게 아니라, 실제 txt 파일로도 저장된다
 ![보고서](./docs/txt파일로저장됨.png)
 
+# 📋ppt
+![ppt](./docs/ppt/ppt1.png)
+![ppt](./docs/ppt/ppt2.png)
+![ppt](./docs/ppt/ppt3.png)
+![ppt](./docs/ppt/ppt4.png)
+![ppt](./docs/ppt/ppt5.png)
+![ppt](./docs/ppt/ppt6.png)
+![ppt](./docs/ppt/ppt7.png)
+![ppt](./docs/ppt/ppt8.png)
+![ppt](./docs/ppt/ppt9.png)
+![ppt](./docs/ppt/ppt10.png)
