@@ -25,7 +25,8 @@
   - 팩토리 패턴 (컨트롤러/뷰)  
   - 템플릿 메서드 패턴 (뷰 공통 구조)
   - 싱글톤
-- **입력 처리**: BufferedReader 싱글톤(`InputReader`)
+- **입력 처리**: InputStreamReader + BufferedReader 조합.
+  - 싱글톤으로 관리(`InputReader클래스`) → 입력 스트림을 전역에서 하나만 사용하도록 보장 
 - **보안**: 비밀번호 SHA-256 해시 + 랜덤 Salt 
 - **파일 입출력**
   - 문자 기반 스트림(`FileReader` / `FileWriter`)
